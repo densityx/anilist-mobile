@@ -26,6 +26,11 @@ query (
                 format
                 isAdult
                 bannerImage
+                episodes
+                duration
+                genres
+                trending
+                favourites
                 title {
                   userPreferred
                 }

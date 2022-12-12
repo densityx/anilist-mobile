@@ -62,6 +62,7 @@ const App = () => {
             <NavigationContainer theme={scheme == 'dark' ? MyThemeDark : MyThemeLight}>
                 <Tab.Navigator
                     initialRouteName={'Home'}
+                    id={'DefaultTabNavigator'}
                     screenOptions={({route}) => ({
                         tabBarIcon: ({focused, color, size}) => {
 

@@ -1,25 +1,29 @@
 import React from "react";
-import {Text, Image, Pressable, View} from "react-native";
+import {Text, Image, Pressable, View, TouchableOpacity, TouchableHighlight} from "react-native";
 import {useTailwind} from "tailwind-rn";
 import {useNavigation} from "@react-navigation/native";
 import {LinearGradient} from "expo-linear-gradient";
 
 export default function AnimeCard({data}) {
+    console.log('data anime card:', data);
     const navigation = useNavigation();
     const tailwind = useTailwind();
 
     const handlePress = () => {
         navigation.navigate('AnimeShow', {
-            animeId: data.id
+            animeId: data?.item?.id
         });
     };
 
     return (
-        <Pressable onPress={handlePress} style={tailwind('w-1/2 p-2')}>
+        <TouchableHighlight
+            onPress={handlePress}
+            style={tailwind('w-1/2 p-4')}
+        >
             <View style={tailwind('bg-white rounded-lg overflow-hidden')}>
                 <Image
                     source={{
-                        uri: data.coverImage.large
+                        uri: data?.item?.coverImage?.large
                     }}
                     style={tailwind('h-[260px] w-full')}
                 />
@@ -32,10 +36,10 @@ export default function AnimeCard({data}) {
                 <View
                     style={tailwind('absolute flex justify-end items-start w-full bottom-0 left-0 h-[64px] p-2')}>
                     <Text style={tailwind('text-lg text-zinc-200 font-medium')}>
-                        {data.title.romaji}
+                        {data?.item?.title?.romaji}
                     </Text>
                 </View>
             </View>
-        </Pressable>
+        </TouchableHighlight>
     )
 }

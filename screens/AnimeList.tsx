@@ -7,7 +7,7 @@ import {
     TextInput,
     Pressable,
     useColorScheme,
-    Appearance, ActivityIndicator
+    Appearance, ActivityIndicator, FlatList
 } from "react-native";
 import React, {useCallback, useEffect, useState} from "react";
 import {retrieveData} from "../services/paginatedQuery";
@@ -71,13 +71,21 @@ const AnimeListComponent = ({navigation}) => {
         retrieveAnime();
     }, [retrieveAnime]);
 
-    if (loading) {
-        return <LoadingScreen/>
-    }
+    // if (loading) {
+    //     return <LoadingScreen/>
+    // }
 
-    return (
-        <SafeAreaView style={tailwind('flex h-full')}>
-            <ScrollView>
+    // const renderAnimeItem = ({data}) => (
+    //     console.log('renderAnimeItem', data);
+    //
+    //     <AnimeCard data={data}/>
+    // );
+
+    return loading
+        ? <LoadingScreen/>
+        : (
+            // <View>
+            <SafeAreaView>
                 {/*<View style={tailwind('items-center')}>*/}
                 {/*    <View style={tailwind('bg-blue-200 px-3 py-1 rounded-full')}>*/}
                 {/*        <Text style={tailwind('text-blue-800 font-semibold')}>*/}
@@ -102,14 +110,22 @@ const AnimeListComponent = ({navigation}) => {
                     />
                 </View>
 
-                <View style={tailwind('flex flex-row flex-wrap px-2')}>
-                    {allAnime.media.map((data) => (
-                        <AnimeCard key={data.id} data={data}/>
-                    ))}
-                </View>
-            </ScrollView>
-        </SafeAreaView>
-    )
+                {/*<View style={tailwind('flex flex-row flex-wrap px-2')}>*/}
+                <FlatList
+                    data={allAnime.media}
+                    renderItem={(item) => <AnimeCard data={item}/>}
+                    keyExtractor={anime => {
+                        console.log('anime id', anime.id);
+                        return anime.id;
+                    }}
+                    numColumns={2}
+                />
+                {/*{allAnime.media.map((data) => (*/}
+                {/*    <AnimeCard key={data.id} data={data}/>*/}
+                {/*))}*/}
+                {/*</View>*/}
+            </SafeAreaView>
+        )
 }
 
 export default function AnimeList({navigation}) {
