@@ -4,18 +4,18 @@ import React from "react";
 import {useNavigation} from "@react-navigation/native";
 import {useTailwind} from "tailwind-rn";
 
-export default function AnimeCardHorizontal({anime}) {
+export default function MangaCardHorizontal({manga}) {
     const navigation = useNavigation();
     const tailwind = useTailwind();
 
     return (
         <TouchableOpacity
-            key={anime?.node?.id}
+            key={manga?.node?.id}
             onPress={() => {
                 navigation.navigate('AnimeList', {
                     screen: 'AnimeShow',
                     params: {
-                        animeId: anime?.node?.id
+                        mangaId: manga?.node?.id
                     },
                 });
             }}
@@ -26,7 +26,7 @@ export default function AnimeCardHorizontal({anime}) {
                 >
                     <Image
                         source={{
-                            uri: anime.node.coverImage.large
+                            uri: manga.node.coverImage.large
                         }}
                         style={tailwind('h-[160px] w-full')}
                     />
@@ -39,13 +39,13 @@ export default function AnimeCardHorizontal({anime}) {
 
                 <View style={tailwind('w-3/4 bottom-0 left-0 pl-4')}>
                     <Text style={tailwind('text-lg text-zinc-800 dark:text-teal-500 font-medium')}>
-                        {anime?.node?.title?.userPreferred}
+                        {manga?.node?.title?.userPreferred}
                     </Text>
 
                     <View
                         style={tailwind('flex flex-row flex-wrap w-full')}
                     >
-                        {anime?.node?.genres?.map((genre, index) => (
+                        {manga?.node?.genres?.map((genre, index) => (
                             <Text
                                 key={index}
                                 style={tailwind('mr-2 mt-2 px-2 py-1 h-[28px] rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 text-sm border border-zinc-800 dark:border-zinc-400')}
@@ -57,42 +57,42 @@ export default function AnimeCardHorizontal({anime}) {
                     </View>
 
                     <View style={tailwind('flex flex-row flex-wrap w-full')}>
-                        {!!anime?.node?.duration &&
+                        {!!manga?.node?.duration &&
                             <View style={tailwind('mt-2 w-1/2')}>
                                 <Text
                                     style={tailwind('text-zinc-800 dark:text-zinc-400')}
                                 >
-                                    Duration: {anime?.node?.duration} mins
+                                    Duration: {manga?.node?.duration} mins
                                 </Text>
                             </View>
                         }
 
-                        {!!anime?.node?.episodes &&
+                        {!!manga?.node?.episodes &&
                             <View style={tailwind('mt-2 w-1/2')}>
                                 <Text
                                     style={tailwind('text-zinc-800 dark:text-zinc-400')}
                                 >
-                                    Ep: {anime?.node?.episodes} episodes
+                                    Ep: {manga?.node?.episodes} episodes
                                 </Text>
                             </View>
                         }
 
-                        {!!anime?.node?.trending &&
+                        {!!manga?.node?.trending &&
                             <View style={tailwind('mt-2 w-1/2')}>
                                 <Text
                                     style={tailwind('text-zinc-800 dark:text-zinc-400')}
                                 >
-                                    Trending: #{anime?.node?.trending}
+                                    Trending: #{manga?.node?.trending}
                                 </Text>
                             </View>
                         }
 
-                        {!!anime?.node?.favourites &&
+                        {!!manga?.node?.favourites &&
                             <View style={tailwind('mt-2 w-1/2')}>
                                 <Text
                                     style={tailwind('text-zinc-800 dark:text-zinc-400')}
                                 >
-                                    Fav: {anime?.node?.favourites}
+                                    Fav: {manga?.node?.favourites}
                                 </Text>
                             </View>
                         }

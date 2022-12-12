@@ -26,6 +26,10 @@
   margin: 1rem
 }
 
+.m-1 {
+  margin: 0.25rem
+}
+
 .mt-3 {
   margin-top: 0.75rem
 }
@@ -68,6 +72,14 @@
 
 .mb-\[300px\] {
   margin-bottom: 300px
+}
+
+.mr-1 {
+  margin-right: 0.25rem
+}
+
+.mb-1 {
+  margin-bottom: 0.25rem
 }
 
 .flex {
@@ -190,6 +202,10 @@
   flex-direction: row
 }
 
+.flex-col {
+  flex-direction: column
+}
+
 .flex-wrap {
   flex-wrap: wrap
 }
@@ -232,6 +248,10 @@
 
 .rounded-full {
   border-radius: 9999px
+}
+
+.rounded-sm {
+  border-radius: 0.125rem
 }
 
 .border-2 {
@@ -386,6 +406,26 @@
 
 .font-bold {
   font-weight: 700
+}
+
+.leading-loose {
+  line-height: 2
+}
+
+.leading-relaxed {
+  line-height: 1.625
+}
+
+.leading-\[40px\] {
+  line-height: 40px
+}
+
+.leading-\[32px\] {
+  line-height: 32px
+}
+
+.leading-\[28px\] {
+  line-height: 28px
 }
 
 .text-zinc-200 {

@@ -16,34 +16,7 @@ import {retrieveData} from '../services/userFavoriteSingleQuery';
 import {LinearGradient} from "expo-linear-gradient";
 import LoadingScreen from "../components/Common/LoadingScreen";
 import AnimeCardHorizontal from "../components/Anime/AnimeCardHorizontal";
-
-const data = [{
-    "favouriteOrder": 2000,
-    "node": {
-        "bannerImage": "https://s4.anilist.co/file/anilistcdn/media/anime/banner/127230-lf01ya5ny8aH.jpg",
-        "coverImage": [Object],
-        "format": "TV",
-        "id": 127230,
-        "isAdult": false,
-        "startDate": [Object],
-        "status": "RELEASING",
-        "title": [Object],
-        "type": "ANIME"
-    }
-}, {
-    "favouriteOrder": 2000,
-    "node": {
-        "bannerImage": "https://s4.anilist.co/file/anilistcdn/media/anime/banner/101922-YfZhKBUDDS6L.jpg",
-        "coverImage": [Object],
-        "format": "TV",
-        "id": 101922,
-        "isAdult": false,
-        "startDate": [Object],
-        "status": "FINISHED",
-        "title": [Object],
-        "type": "ANIME"
-    }
-}];
+import MangaCardHorizontal from "../components/Manga/MangaCardHorizontal";
 
 export default function Settings({navigation}) {
     const scheme = 'dark';
@@ -56,11 +29,12 @@ export default function Settings({navigation}) {
         setLoading(true)
         let {data} = await retrieveData();
 
-        console.log('data:', data.User.favourites.anime.edges);
+        console.log('data anime:', data.User.favourites.anime.edges);
+        console.log('data manga:', data.User.favourites.manga.edges);
         setFavoriteAnime(data.User.favourites.anime.edges)
         setFavoriteManga(data.User.favourites.manga.edges)
 
-        console.log('genres', favoriteAnime[0]?.node?.genres);
+        // console.log('genres', favoriteAnime[0]?.node?.genres);
         // setFavoriteAnime(data)
         // setFavoriteManga(data)
         setLoading(false);
@@ -95,14 +69,45 @@ export default function Settings({navigation}) {
                             All Favorite Anime
                         </Text>
 
-                        <View>
-                            {favoriteAnime?.map(anime => (
-                                <AnimeCardHorizontal
-                                    key={anime?.node?.id}
-                                    anime={anime}
-                                />
-                            ))}
-                        </View>
+                        {favoriteAnime.length ? (
+                            <View>
+                                {favoriteAnime?.map(anime => (
+                                    <AnimeCardHorizontal
+                                        key={anime?.node?.id}
+                                        anime={anime}
+                                    />
+                                ))}
+                            </View>
+                        ) : (
+                            <View>
+                                <Text style={tailwind('mt-3 dark:text-zinc-400')}>
+                                    You currently don't have any favourite anime list
+                                </Text>
+                            </View>
+                        )}
+                    </Card>
+
+                    <Card styles={'mt-4'}>
+                        <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
+                            All Favorite Manga
+                        </Text>
+
+                        {favoriteManga.length ? (
+                            <View>
+                                {favoriteManga?.map(manga => (
+                                    <MangaCardHorizontal
+                                        key={manga?.node?.id}
+                                        manga={manga}
+                                    />
+                                ))}
+                            </View>
+                        ) : (
+                            <View>
+                                <Text style={tailwind('mt-3 dark:text-zinc-400')}>
+                                    You currently don't have any favourite manga list
+                                </Text>
+                            </View>
+                        )}
                     </Card>
                 </SafeAreaView>
             </ScrollView>

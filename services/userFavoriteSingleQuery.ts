@@ -60,6 +60,9 @@ query (
                 format
                 isAdult
                 bannerImage
+                genres
+                trending
+                favourites
                 title {
                   userPreferred
                 }

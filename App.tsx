@@ -92,7 +92,7 @@ const App = () => {
                         tabBarInactiveTintColor: 'gray'
                     })}
                 >
-                    <Tab.Screen name={'Home'} component={Home} options={{title: 'Home'}}/>
+                    <Tab.Screen name={'Home'} component={Home} options={{title: 'Welcome'}}/>
                     <Tab.Screen name={'AnimeList'} component={AnimeList}/>
                     <Tab.Screen name={'Favorites'} component={Favorites}/>
                     <Tab.Screen name={'Account'} component={Account}/>
