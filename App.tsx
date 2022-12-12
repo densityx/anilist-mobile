@@ -31,10 +31,10 @@ import {DarkTheme, DefaultTheme, NavigationContainer} from "@react-navigation/na
 import Account from "./screens/Account";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {Ionicons} from "@expo/vector-icons";
-import Home from "./screens/Home";
+import Welcome from "./screens/Welcome";
 import Favorites from "./screens/Favorites";
 import {useColorScheme} from "react-native";
-import {IconAbc, IconHeart, IconHome2, IconLayoutList, IconUserCircle} from 'tabler-icons-react-native';
+import {IconAbc, IconBraces, IconHeart, IconHome2, IconLayoutList, IconUserCircle} from 'tabler-icons-react-native';
 
 const MyThemeLight = {
     ...DefaultTheme,
@@ -66,8 +66,8 @@ const App = () => {
                     screenOptions={({route}) => ({
                         tabBarIcon: ({focused, color, size}) => {
 
-                            if (route.name === 'Home') {
-                                return <IconHome2 color={color} size={size}/>
+                            if (route.name === 'Welcome') {
+                                return <IconBraces color={color} size={size}/>
                                 // iconName = focused
                                 //     ? 'ios-home'
                                 //     : 'ios-home-outline';
@@ -92,7 +92,7 @@ const App = () => {
                         tabBarInactiveTintColor: 'gray'
                     })}
                 >
-                    <Tab.Screen name={'Home'} component={Home} options={{title: 'Welcome'}}/>
+                    <Tab.Screen name={'Welcome'} component={Welcome} options={{title: 'Welcome'}}/>
                     <Tab.Screen name={'AnimeList'} component={AnimeList}/>
                     <Tab.Screen name={'Favorites'} component={Favorites}/>
                     <Tab.Screen name={'Account'} component={Account}/>

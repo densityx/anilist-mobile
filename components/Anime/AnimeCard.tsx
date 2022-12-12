@@ -38,7 +38,7 @@ export default function AnimeCard({anime}) {
                     style={tailwind('absolute flex justify-end items-start w-full bottom-0 left-0 h-[64px] p-2')}
                 >
                     <Text style={tailwind('text-zinc-200 font-medium')}>
-                        {anime?.title?.romaji}
+                        {anime?.title?.userPreferred}
                     </Text>
                 </View>
             </View>

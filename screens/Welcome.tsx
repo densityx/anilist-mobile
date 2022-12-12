@@ -18,7 +18,7 @@ const TOOLS = [
     'Chrome'
 ];
 
-export default function Home() {
+export default function Welcome() {
     const tailwind = useTailwind();
 
     return (
@@ -52,16 +52,6 @@ export default function Home() {
             </View>
 
             <Text style={tailwind('mt-3 dark:text-zinc-400 leading-[28px]')}>
-                Developer
-            </Text>
-
-            <Card styles={'mt-3'}>
-                <Text style={tailwind('dark:text-zinc-400')}>
-                    Ahmad Aziz (ahmadaziz0441@gmail.com)
-                </Text>
-            </Card>
-
-            <Text style={tailwind('mt-3 dark:text-zinc-400 leading-[28px]')}>
                 Tools
             </Text>
 
@@ -73,6 +63,18 @@ export default function Home() {
                         </Text>
                     </Card>
                 ))}
+            </View>
+
+            <Text style={tailwind('mt-3 dark:text-zinc-400 leading-[28px]')}>
+                Developer
+            </Text>
+
+            <View style={tailwind('mt-3 flex flex-row flex-wrap')}>
+                <Card>
+                    <Text style={tailwind('dark:text-zinc-400')}>
+                        Ahmad Aziz (ahmadaziz0441@gmail.com)
+                    </Text>
+                </Card>
             </View>
         </View>
     )
