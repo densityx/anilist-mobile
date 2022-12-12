@@ -25,7 +25,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String) {
 `;
 
 const url = 'https://graphql.anilist.co';
-const options = (term) => ({
+const options = (term, page) => ({
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -35,15 +35,15 @@ const options = (term) => ({
         query: query,
         variables: {
             search: term,
-            page: 1,
-            perPage: 6,
+            page: page,
+            perPage: 12,
             type: 'ANIME',
         }
     })
 });
 
-export function retrieveData(term: string) {
-    return fetch(url, options(term))
+export function retrieveData(term: string, page: number) {
+    return fetch(url, options(term, page))
         .then(handleResponse)
         .catch(handleError);
 }

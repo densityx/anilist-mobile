@@ -22,10 +22,6 @@
   bottom: 0px
 }
 
-.m-2 {
-  margin: 0.5rem
-}
-
 .m-4 {
   margin: 1rem
 }
@@ -70,20 +66,12 @@
   margin-right: 0.75rem
 }
 
-.ml-4 {
-  margin-left: 1rem
-}
-
-.mt-1 {
-  margin-top: 0.25rem
+.mb-\[300px\] {
+  margin-bottom: 300px
 }
 
 .flex {
   display: flex
-}
-
-.table {
-  display: table
 }
 
 .h-\[260px\] {
@@ -138,20 +126,24 @@
   height: 120px
 }
 
-.h-\[40px\] {
-  height: 40px
-}
-
-.h-\[24px\] {
-  height: 24px
-}
-
 .h-\[28px\] {
   height: 28px
 }
 
-.h-\[380px\] {
-  height: 380px
+.h-\[140px\] {
+  height: 140px
+}
+
+.h-\[130px\] {
+  height: 130px
+}
+
+.h-\[200px\] {
+  height: 200px
+}
+
+.h-\[100px\] {
+  height: 100px
 }
 
 .w-1\/2 {
@@ -178,12 +170,12 @@
   width: 120px
 }
 
-.w-1\/3 {
-  width: 33.333333%
+.w-2\/5 {
+  width: 40%
 }
 
-.w-2\/3 {
-  width: 66.666667%
+.w-3\/5 {
+  width: 60%
 }
 
 .w-1\/4 {
@@ -194,16 +186,8 @@
   width: 75%
 }
 
-.flex-1 {
-  flex: 1 1 0%
-}
-
 .flex-row {
   flex-direction: row
-}
-
-.flex-col {
-  flex-direction: column
 }
 
 .flex-wrap {
@@ -212,6 +196,10 @@
 
 .items-start {
   align-items: flex-start
+}
+
+.items-end {
+  align-items: flex-end
 }
 
 .items-center {
@@ -311,16 +299,20 @@
   background-color: rgb(39 39 42 / var(--tw-bg-opacity))
 }
 
-.p-2 {
-  padding: 0.5rem
-}
-
 .p-4 {
   padding: 1rem
 }
 
+.p-2 {
+  padding: 0.5rem
+}
+
 .p-3 {
   padding: 0.75rem
+}
+
+.p-1 {
+  padding: 0.25rem
 }
 
 .px-3 {
@@ -354,10 +346,6 @@
 
 .pr-4 {
   padding-right: 1rem
-}
-
-.pl-2 {
-  padding-left: 0.5rem
 }
 
 .pl-4 {
@@ -394,6 +382,10 @@
 
 .font-semibold {
   font-weight: 600
+}
+
+.font-bold {
+  font-weight: 700
 }
 
 .text-zinc-200 {
@@ -481,6 +473,21 @@
     background-color: rgb(24 24 27 / var(--tw-bg-opacity))
   }
 
+  .dark\:bg-zinc-200 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(228 228 231 / var(--tw-bg-opacity))
+  }
+
+  .dark\:bg-teal-500 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(20 184 166 / var(--tw-bg-opacity))
+  }
+
+  .dark\:bg-zinc-700 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(63 63 70 / var(--tw-bg-opacity))
+  }
+
   .dark\:text-zinc-500 {
     --tw-text-opacity: 1;
     color: rgb(113 113 122 / var(--tw-text-opacity))
@@ -499,5 +506,10 @@
   .dark\:text-zinc-300 {
     --tw-text-opacity: 1;
     color: rgb(212 212 216 / var(--tw-text-opacity))
+  }
+
+  .dark\:text-teal-500 {
+    --tw-text-opacity: 1;
+    color: rgb(20 184 166 / var(--tw-text-opacity))
   }
 }

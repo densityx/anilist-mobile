@@ -1,7 +1,7 @@
 import {View} from "react-native";
 import {useTailwind} from "tailwind-rn";
 
-export default function Card({children, styles}) {
+export default function Card({children, styles = null}) {
     const tailwind = useTailwind();
 
     return (

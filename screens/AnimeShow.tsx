@@ -1,5 +1,15 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {View, Text, Image, ScrollView, SafeAreaView, StyleSheet, Pressable, useWindowDimensions} from "react-native";
+import {
+    View,
+    Text,
+    Image,
+    ScrollView,
+    SafeAreaView,
+    StyleSheet,
+    Pressable,
+    useWindowDimensions,
+    TouchableOpacity
+} from "react-native";
 import {retrieveData} from "../services/singleQuery";
 import {useTailwind} from "tailwind-rn";
 import {LinearGradient} from "expo-linear-gradient";
@@ -160,8 +170,11 @@ export default function AnimeShow({route}) {
                                         Trailer
                                     </Text>
 
-                                    <View
-                                        style={tailwind('relative flex items-center justify-center mt-2 rounded-lg overflow-hidden')}>
+                                    <TouchableOpacity
+                                        onPress={() => {
+                                        }}
+                                        style={tailwind('relative flex items-center justify-center mt-2 rounded-lg overflow-hidden')}
+                                    >
                                         <Image
                                             source={{
                                                 uri: anime?.trailer?.thumbnail
@@ -182,7 +195,7 @@ export default function AnimeShow({route}) {
                                                 <Path d="M7 4v16l13 -8z"></Path>
                                             </Svg>
                                         </View>
-                                    </View>
+                                    </TouchableOpacity>
                                 </View>
                             }
 

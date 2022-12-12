@@ -1,11 +1,21 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {View, Text, Pressable, SafeAreaView, Image, ScrollView} from "react-native";
+import {
+    View,
+    Text,
+    Pressable,
+    SafeAreaView,
+    Image,
+    ScrollView,
+    TouchableHighlight,
+    TouchableOpacity
+} from "react-native";
 import {useTailwind} from "tailwind-rn";
 import Card from "../components/Common/Card";
 import {IconInfoCircle} from "tabler-icons-react-native";
 import {retrieveData} from '../services/userFavoriteSingleQuery';
 import {LinearGradient} from "expo-linear-gradient";
 import LoadingScreen from "../components/Common/LoadingScreen";
+import AnimeCardHorizontal from "../components/Anime/AnimeCardHorizontal";
 
 const data = [{
     "favouriteOrder": 2000,
@@ -87,92 +97,10 @@ export default function Settings({navigation}) {
 
                         <View>
                             {favoriteAnime?.map(anime => (
-                                <Pressable
-                                    onPress={() => {
-                                        navigation.navigate('AnimeList', {
-                                            screen: 'AnimeShow',
-                                            params: {
-                                                animeId: anime?.node?.id
-                                            },
-                                        });
-                                    }}
+                                <AnimeCardHorizontal
                                     key={anime?.node?.id}
-                                    style={tailwind('flex flex-row flex-wrap w-full mt-4')}
-                                >
-                                    <View style={tailwind('w-1/4 bg-white rounded-lg overflow-hidden')}>
-                                        <Image
-                                            source={{
-                                                uri: anime.node.coverImage.large
-                                            }}
-                                            style={tailwind('h-[120px] w-full')}
-                                        />
-
-                                        <LinearGradient
-                                            colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.9)']}
-                                            style={tailwind('absolute top-0 right-0 left-0 h-full')}
-                                        />
-                                    </View>
-
-                                    <View style={tailwind('w-3/4 bottom-0 left-0 pl-4')}>
-                                        <Text style={tailwind('text-lg text-zinc-200 font-medium')}>
-                                            {anime?.node?.title?.userPreferred}
-                                        </Text>
-
-                                        <ScrollView horizontal={true}
-                                                    style={tailwind('mt-2 w-full')}>
-                                            {anime?.node?.genres?.map((genre, index) => (
-                                                <Text
-                                                    key={index}
-                                                    style={tailwind('px-2 py-1 h-[28px] rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 text-sm mr-3 border border-zinc-800 dark:border-zinc-400')}
-                                                >
-                                                    {genre}
-                                                </Text>
-                                            ))}
-                                        </ScrollView>
-
-                                        <View style={tailwind('flex flex-row flex-wrap w-full')}>
-                                            {!!anime?.node?.duration &&
-                                                <View style={tailwind('mt-2 w-1/2')}>
-                                                    <Text
-                                                        style={tailwind('text-zinc-800 dark:text-zinc-400')}
-                                                    >
-                                                        Duration: {anime?.node?.duration} mins
-                                                    </Text>
-                                                </View>
-                                            }
-
-                                            {!!anime?.node?.episodes &&
-                                                <View style={tailwind('mt-2 w-1/2')}>
-                                                    <Text
-                                                        style={tailwind('text-zinc-800 dark:text-zinc-400')}
-                                                    >
-                                                        Ep: {anime?.node?.episodes} episodes
-                                                    </Text>
-                                                </View>
-                                            }
-
-                                            {!!anime?.node?.trending &&
-                                                <View style={tailwind('mt-2 w-1/2')}>
-                                                    <Text
-                                                        style={tailwind('text-zinc-800 dark:text-zinc-400')}
-                                                    >
-                                                        Trending: #{anime?.node?.trending}
-                                                    </Text>
-                                                </View>
-                                            }
-
-                                            {!!anime?.node?.favourites &&
-                                                <View style={tailwind('mt-2 w-1/2')}>
-                                                    <Text
-                                                        style={tailwind('text-zinc-800 dark:text-zinc-400')}
-                                                    >
-                                                        Fav: {anime?.node?.favourites}
-                                                    </Text>
-                                                </View>
-                                            }
-                                        </View>
-                                    </View>
-                                </Pressable>
+                                    anime={anime}
+                                />
                             ))}
                         </View>
                     </Card>
