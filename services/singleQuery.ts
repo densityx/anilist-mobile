@@ -1,8 +1,8 @@
 // Here we define our query as a multi-line string
 // Storing it in a separate .graphql/.gql file is also possible
 let singleQuery = `
-query ($id: Int) { # Define which variables will be used in the query (id)
-  Media (id: $id, type: ANIME) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
+query ($id: Int, $type: MediaType) { # Define which variables will be used in the query (id)
+  Media (id: $id, type: $type) { # Insert our variables into the query arguments (id) (type: ANIME is hard-coded in the query)
     id
     title {
       romaji
@@ -18,6 +18,8 @@ query ($id: Int) { # Define which variables will be used in the query (id)
     genres
     trending
     favourites
+    volumes
+    chapters
     trailer {
       id
       site
@@ -36,6 +38,7 @@ query ($id: Int) { # Define which variables will be used in the query (id)
     relations {
       nodes{
         id
+        type
         title {
           romaji
         }
@@ -50,7 +53,7 @@ query ($id: Int) { # Define which variables will be used in the query (id)
 
 // Define the config we'll need for our Api request
 let url = 'https://graphql.anilist.co';
-let options = (id) => ({
+let options = (id, type) => ({
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
@@ -59,7 +62,8 @@ let options = (id) => ({
     body: JSON.stringify({
         query: singleQuery,
         variables: {
-            id
+            id,
+            type
         }
     })
 });
@@ -75,9 +79,9 @@ export function handleError(error) {
     console.error(error);
 }
 
-export function retrieveData(animeId) {
+export function retrieveData(mediaId, type) {
     // Make the HTTP Api request
-    return fetch(url, options(animeId))
+    return fetch(url, options(mediaId, type))
         .then(handleResponse)
         .catch(handleError);
 }

@@ -12,11 +12,9 @@ export default function AnimeCardHorizontal({anime}) {
         <TouchableOpacity
             key={anime?.node?.id}
             onPress={() => {
-                navigation.navigate('AnimeList', {
-                    screen: 'AnimeShow',
-                    params: {
-                        animeId: anime?.node?.id
-                    },
+                navigation.navigate('AnimeShow', {
+                    animeId: anime?.node?.id,
+                    animeName: anime?.node?.title?.userPreferred
                 });
             }}
         >

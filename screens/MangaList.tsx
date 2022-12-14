@@ -5,17 +5,17 @@ import {
     Appearance, ActivityIndicator, FlatList, SafeAreaView
 } from "react-native";
 import React, {useCallback, useEffect, useState} from "react";
-import {retrieveData} from "../services/paginatedQuery";
+import {retrieveData} from "../services/paginatedQueryManga";
 import {useTailwind} from "tailwind-rn";
-import AnimeCard from "../components/Anime/AnimeCard";
-import AnimeShow from "./AnimeShow";
+import MangaCard from "../components/Manga/MangaCard";
+import MangaShow from "./MangaShow";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useDebouncedValue} from "@mantine/hooks";
 import {IconSearch} from "tabler-icons-react-native";
 import LoadingScreen from "../components/Common/LoadingScreen";
 import Card from "../components/Common/Card";
 
-const AnimeListComponent = ({navigation}) => {
+const MangaListComponent = ({navigation}) => {
     let scheme = 'dark';
 
     const tailwind = useTailwind();
@@ -23,71 +23,75 @@ const AnimeListComponent = ({navigation}) => {
     const [debounced] = useDebouncedValue(term, 500);
 
     const [loading, setLoading] = useState(true);
-    const [animes, setAnimes] = useState([]);
+    const [mangas, setMangas] = useState([]);
     const [page, setPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(false)
 
-    let retrieveAnime = useCallback(async () => {
+    let retrieveManga = useCallback(async () => {
         setLoading(true);
         setPage(1)
         let {
             data: {
-                Page: {media: retrievedAnime, pageInfo: {hasNextPage}},
-                // popular: {media: popularAnime},
-                season: {media: seasonalAnime, pageInfo: {hasNextPage: hasNextSeasonPage}},
+                // Page: {media: retrievedManga, pageInfo: {hasNextPage}},
+                // popular: {media: popularManga},
+                popular: {media: seasonalManga, pageInfo: {hasNextPage: hasNextSeasonPage}},
             }
-        } = await retrieveData(debounced, 1, 'ANIME')
+        } = await retrieveData(debounced, 1, 'MANGA')
 
-        // console.log('seasonalAnime anime: ', JSON.stringify(seasonalAnime, null, 4));
+        console.log('seasonalManga manga: ', JSON.stringify(seasonalManga, null, 4));
 
         if (term.length) {
-            setAnimes(retrievedAnime);
+            setMangas(seasonalManga);
             setHasNextPage(hasNextPage);
         } else {
-            setAnimes(seasonalAnime);
+            setMangas(seasonalManga);
             setHasNextPage(hasNextSeasonPage)
         }
 
         setLoading(false);
     }, [debounced]);
 
-    const retrieveAnimeOnPageChange = useCallback(async () => {
+    const retrieveMangaOnPageChange = useCallback(async () => {
         let {
             data: {
-                Page: {media: retrievedAnime, pageInfo: {hasNextPage}},
-                season: {media: seasonalAnime, pageInfo: {hasNextPage: hasNextSeasonPage}},
+                // Page: {media: retrievedManga, pageInfo: {hasNextPage}},
+                trending: {media: seasonalManga, pageInfo: {hasNextPage: hasNextSeasonPage}},
             }
-        } = await retrieveData(debounced, page, 'ANIME')
+        } = await retrieveData(debounced, page, 'MANGA')
+
+        console.log('season', seasonalManga)
 
         if (term.length) {
-            setAnimes([...animes, ...retrievedAnime]);
+            setMangas([...mangas, ...seasonalManga]);
             setHasNextPage(hasNextPage);
         } else {
-            // setAnimes(seasonalAnime);
+            // setMangas(seasonalManga);
             // setHasNextPage(hasNextSeasonPage)
 
-            setAnimes([...animes, ...seasonalAnime]);
+            setMangas([...mangas, ...seasonalManga]);
             setHasNextPage(hasNextSeasonPage);
         }
     }, [page]);
 
     useEffect(() => {
         if (page !== 1) {
-            retrieveAnimeOnPageChange();
+            retrieveMangaOnPageChange();
         }
 
-    }, [retrieveAnimeOnPageChange, page]);
+    }, [retrieveMangaOnPageChange, page]);
 
     useEffect(() => {
-        retrieveAnime();
-    }, [retrieveAnime, debounced]);
+        retrieveManga();
+    }, [retrieveManga, debounced]);
+
+    // return <Text>working</Text>;
 
     return (
         <SafeAreaView style={{flex: 1}}>
             <View style={tailwind('relative flex justify-center p-4')}>
                 <TextInput
                     style={tailwind('pl-8 pr-4 py-2 w-full rounded-md bg-white dark:bg-zinc-800 border-transparent text-zinc-900 dark:text-white')}
-                    placeholder={'Search anime...'}
+                    placeholder={'Search manga...'}
                     value={term}
                     onChangeText={(text) => setTerm(text)}
                     placeholderTextColor={scheme === 'dark' ? '#a1a1aa' : '#27272a'}
@@ -105,17 +109,17 @@ const AnimeListComponent = ({navigation}) => {
                 : (
                     <FlatList
                         contentContainerStyle={{flexGrow: 1}}
-                        data={animes}
-                        renderItem={({item}) => <AnimeCard anime={item}/>}
-                        keyExtractor={(anime, index) => index.toString()}
+                        data={mangas}
+                        renderItem={({item}) => <MangaCard manga={item}/>}
+                        keyExtractor={(manga, index) => index.toString()}
                         numColumns={2}
                         refreshing={loading}
-                        onRefresh={retrieveAnime}
+                        onRefresh={retrieveManga}
                         ListEmptyComponent={() => (
                             <View style={tailwind('p-4')}>
                                 <Card styles={'px-4'}>
                                     <Text style={tailwind('font-bold text-center text-lg dark:text-teal-500')}>
-                                        Search anime and get the result here...
+                                        Search manga and get the result here...
                                     </Text>
                                 </Card>
                             </View>
@@ -135,21 +139,21 @@ const AnimeListComponent = ({navigation}) => {
     )
 }
 
-export default function AnimeList({navigation}) {
-    const AnimeListStack = createNativeStackNavigator();
+export default function MangaList({navigation}) {
+    const MangaListStack = createNativeStackNavigator();
 
     return (
-        <AnimeListStack.Navigator>
-            <AnimeListStack.Screen
-                name={'AnimeListComponent'}
-                component={AnimeListComponent}
-                options={{title: 'Anime List', headerTitle: 'Anime List'}}
+        <MangaListStack.Navigator>
+            <MangaListStack.Screen
+                name={'MangaListComponent'}
+                component={MangaListComponent}
+                options={{title: 'Manga List'}}
             />
-            <AnimeListStack.Screen
-                name={'AnimeShow'}
-                component={AnimeShow}
-                options={({route}) => ({title: route.params.animeName})}
+            <MangaListStack.Screen
+                name={'MangaShow'}
+                component={MangaShow}
+                options={({route}) => ({title: route.params.mangaName})}
             />
-        </AnimeListStack.Navigator>
+        </MangaListStack.Navigator>
     )
 }

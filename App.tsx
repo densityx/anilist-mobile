@@ -34,7 +34,18 @@ import {Ionicons} from "@expo/vector-icons";
 import Welcome from "./screens/Welcome";
 import Favorites from "./screens/Favorites";
 import {useColorScheme} from "react-native";
-import {IconAbc, IconBraces, IconHeart, IconHome2, IconLayoutList, IconUserCircle} from 'tabler-icons-react-native';
+import {
+    IconAbc,
+    IconArtboard,
+    IconBraces,
+    IconHeart,
+    IconHome2,
+    IconLayoutList,
+    IconUserCircle
+} from 'tabler-icons-react-native';
+import AnimeShow from "./screens/AnimeShow";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import MangaList from "./screens/MangaList";
 
 const MyThemeLight = {
     ...DefaultTheme,
@@ -56,12 +67,13 @@ const App = () => {
     // const scheme = useColorScheme();
     const scheme = 'dark';
     const Tab = createBottomTabNavigator();
+    const AnimeListStack = createNativeStackNavigator();
 
     return (
         <TailwindProvider utilities={utilities} colorScheme={scheme}>
             <NavigationContainer theme={scheme == 'dark' ? MyThemeDark : MyThemeLight}>
                 <Tab.Navigator
-                    initialRouteName={'Home'}
+                    initialRouteName={'Welcome'}
                     id={'DefaultTabNavigator'}
                     screenOptions={({route}) => ({
                         tabBarIcon: ({focused, color, size}) => {
@@ -75,6 +87,10 @@ const App = () => {
 
                             if (route.name === 'AnimeList') {
                                 return <IconLayoutList color={color} size={size}/>
+                            }
+
+                            if (route.name === 'MangaList') {
+                                return <IconArtboard color={color} size={size}/>
                             }
 
                             if (route.name === 'Favorites') {
@@ -92,10 +108,30 @@ const App = () => {
                         tabBarInactiveTintColor: 'gray'
                     })}
                 >
-                    <Tab.Screen name={'Welcome'} component={Welcome} options={{title: 'Welcome'}}/>
-                    <Tab.Screen name={'AnimeList'} component={AnimeList}/>
-                    <Tab.Screen name={'Favorites'} component={Favorites}/>
-                    <Tab.Screen name={'Account'} component={Account}/>
+                    <Tab.Screen
+                        name={'Welcome'}
+                        component={Welcome}
+                        options={{title: 'Welcome', headerTitle: 'Welcome to Anilist Mobile'}}
+                    />
+                    <Tab.Screen
+                        name={'AnimeList'}
+                        component={AnimeList}
+                        options={{title: 'Anime List', headerShown: false}}
+                    />
+                    <Tab.Screen
+                        name={'MangaList'}
+                        component={MangaList}
+                        options={{title: 'Manga List', headerShown: false}}
+                    />
+                    <Tab.Screen
+                        name={'Favorites'}
+                        component={Favorites}
+                        options={{headerShown: false}}
+                    />
+                    <Tab.Screen
+                        name={'Account'}
+                        component={Account}
+                    />
                 </Tab.Navigator>
             </NavigationContainer>
         </TailwindProvider>

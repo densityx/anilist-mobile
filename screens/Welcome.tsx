@@ -29,7 +29,7 @@ export default function Welcome() {
 
             <View style={tailwind('mt-3 p-4 bg-white dark:bg-zinc-800 rounded-xl')}>
                 <Text style={tailwind('font-semibold text-xl text-teal-400')}>
-                    Welcome to AniList Mobile
+                    AniList Mobile
                 </Text>
 
                 <Text style={tailwind('mt-3 dark:text-zinc-400 leading-[28px]')}>

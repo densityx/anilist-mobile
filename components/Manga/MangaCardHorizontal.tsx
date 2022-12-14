@@ -8,15 +8,16 @@ export default function MangaCardHorizontal({manga}) {
     const navigation = useNavigation();
     const tailwind = useTailwind();
 
+    console.log('manga data', manga.node.id);
+
     return (
         <TouchableOpacity
             key={manga?.node?.id}
             onPress={() => {
-                navigation.navigate('AnimeList', {
-                    screen: 'AnimeShow',
-                    params: {
-                        mangaId: manga?.node?.id
-                    },
+                console.log('manga', manga.id);
+                navigation.navigate('MangaShow', {
+                    mangaId: manga?.node?.id,
+                    mangaName: manga?.node?.title?.userPreferred
                 });
             }}
         >

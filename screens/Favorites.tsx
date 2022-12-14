@@ -17,13 +17,18 @@ import {LinearGradient} from "expo-linear-gradient";
 import LoadingScreen from "../components/Common/LoadingScreen";
 import AnimeCardHorizontal from "../components/Anime/AnimeCardHorizontal";
 import MangaCardHorizontal from "../components/Manga/MangaCardHorizontal";
+import AnimeShow from "./AnimeShow";
+import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {useNavigation} from "@react-navigation/native";
+import MangaShow from "./MangaShow";
 
-export default function Settings({navigation}) {
+const FavoriteListComponent = () => {
     const scheme = 'dark';
     const tailwind = useTailwind();
     const [loading, setLoading] = useState(false);
     const [favoriteAnime, setFavoriteAnime] = useState([]);
     const [favoriteManga, setFavoriteManga] = useState([]);
+    const navigation = useNavigation();
 
     const getUser = useCallback(async () => {
         setLoading(true)
@@ -43,10 +48,6 @@ export default function Settings({navigation}) {
     useEffect(() => {
         getUser();
     }, []);
-
-    const handlePress = () => {
-        navigation.navigate('AnimeList');
-    }
 
     return loading
         ? <LoadingScreen/>
@@ -112,4 +113,31 @@ export default function Settings({navigation}) {
                 </SafeAreaView>
             </ScrollView>
         )
+}
+
+export default function Favorites() {
+    const FavoriteStack = createNativeStackNavigator();
+
+    return (
+        <FavoriteStack.Navigator initialRouteName={'FavoriteListComponent'}>
+            <FavoriteStack.Screen
+                name={'FavoriteListComponent'}
+                component={FavoriteListComponent}
+                options={{title: 'Favorites'}}
+            />
+            <FavoriteStack.Screen
+                name={'AnimeShow'}
+                component={AnimeShow}
+                options={({route}) => ({title: route.params.animeName})}
+                // options={({route}) => ({headerTitle: route.params.animeName})}
+            />
+            <FavoriteStack.Screen
+                name={'MangaShow'}
+                component={MangaShow}
+                // options={({route}) => ({headerTitle: route.params.mangaName})}
+            />
+        </FavoriteStack.Navigator>
+    );
+
+
 }

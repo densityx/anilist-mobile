@@ -7,26 +7,13 @@ import {handleError, handleResponse} from "./singleQuery";
 // }
 
 const query = `
-query ($id: Int, $page: Int, $perPage: Int, $search: String, $season: MediaSeason, $seasonYear: Int, $type: MediaType) {
-    season: Page(page: $page, perPage: $perPage) {
-        pageInfo {
-          total
-          currentPage
-          lastPage
-          hasNextPage
-          perPage
-        }
-        media(
-          season: $season
-          seasonYear: $seasonYear
-          sort: POPULARITY_DESC
-          type: $type
-          isAdult: false
-        ) {
-          ...media
-        }
-      }
-  Page (page: $page, perPage: $perPage) {
+query {
+  trending: Page(page: 1, perPage: 6) {
+    media(sort: TRENDING_DESC, type: MANGA, isAdult: false) {
+      ...media
+    }
+  }
+  popular: Page(page: 1, perPage: 6) {
     pageInfo {
       total
       currentPage
@@ -34,19 +21,26 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String, $season: MediaSeaso
       hasNextPage
       perPage
     }
-    media (id: $id, search: $search, type: ANIME) {
-      id
-      title {
-        romaji
-      }
-      description
-      coverImage {
-        large
-      }
+    media(sort: POPULARITY_DESC, type: MANGA, isAdult: false) {
+      ...media
+    }
+  }
+  manhwa: Page(page: 1, perPage: 6) {
+    media(
+      sort: POPULARITY_DESC
+      type: MANGA
+      countryOfOrigin: "KR"
+      isAdult: false
+    ) {
+      ...media
+    }
+  }
+  top: Page(page: 1, perPage: 10) {
+    media(sort: SCORE_DESC, type: MANGA, isAdult: false) {
+      ...media
     }
   }
 }
-
 fragment media on Media {
   id
   title {
@@ -69,7 +63,6 @@ fragment media on Media {
   }
   bannerImage
   season
-  seasonYear
   description
   type
   format
@@ -86,21 +79,8 @@ fragment media on Media {
     id
     status
   }
-  nextAiringEpisode {
-    airingAt
-    timeUntilAiring
-    episode
-  }
-  studios(isMain: true) {
-    edges {
-      isMain
-      node {
-        id
-        name
-      }
-    }
-  }
 }
+
 `;
 
 const url = 'https://graphql.anilist.co';

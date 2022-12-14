@@ -4,16 +4,14 @@ import {useTailwind} from "tailwind-rn";
 import {useNavigation} from "@react-navigation/native";
 import {LinearGradient} from "expo-linear-gradient";
 
-export default function AnimeCard({anime}) {
+export default function MangaCard({manga}) {
     const navigation = useNavigation();
     const tailwind = useTailwind();
 
-    // console.log('Anime Card:', anime)
-
     const handlePress = () => {
-        navigation.navigate('AnimeShow', {
-            animeId: anime?.id,
-            animeName: anime?.title?.userPreferred
+        navigation.navigate('MangaShow', {
+            mangaId: manga?.id,
+            mangaName: manga?.title?.userPreferred
         });
     };
 
@@ -25,7 +23,7 @@ export default function AnimeCard({anime}) {
             <View style={tailwind('bg-white rounded-lg overflow-hidden')}>
                 <Image
                     source={{
-                        uri: anime?.coverImage?.large
+                        uri: manga?.coverImage?.large
                     }}
                     style={tailwind('h-[260px] w-full')}
                 />
@@ -39,7 +37,7 @@ export default function AnimeCard({anime}) {
                     style={tailwind('absolute flex justify-end items-start w-full bottom-0 left-0 h-[64px] p-2')}
                 >
                     <Text style={tailwind('text-zinc-200 font-medium')}>
-                        {anime?.title?.userPreferred}
+                        {manga?.title?.userPreferred}
                     </Text>
                 </View>
             </View>
