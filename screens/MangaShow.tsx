@@ -270,14 +270,14 @@ export default function MangaShow({route}) {
                                             if (other?.type === 'ANIME') {
                                                 navigation.navigate('AnimeShow', {
                                                     animeId: other?.id,
-                                                    animeName: other?.title?.romaji,
+                                                    animeName: other?.title?.userPreferred,
                                                 })
                                             }
 
                                             if (other?.type === 'MANGA') {
                                                 navigation.navigate('MangaShow', {
                                                     mangaId: other?.id,
-                                                    mangaName: other?.title?.romaji,
+                                                    mangaName: other?.title?.userPreferred,
                                                 })
                                             }
                                         }}

@@ -134,6 +134,7 @@ export default function Favorites() {
             <FavoriteStack.Screen
                 name={'MangaShow'}
                 component={MangaShow}
+                options={({route}) => ({title: route.params.mangaName})}
                 // options={({route}) => ({headerTitle: route.params.mangaName})}
             />
         </FavoriteStack.Navigator>

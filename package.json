@@ -30,7 +30,9 @@
     "react-native-screens": "~3.18.0",
     "react-native-svg": "13.4.0",
     "react-native-web": "~0.18.7",
+    "react-native-webview": "^11.26.0",
     "react-native-youtube": "^2.0.2",
+    "react-native-youtube-iframe": "^2.2.2",
     "tabler-icons-react-native": "^1.116.1",
     "tailwind-rn": "^4.2.0",
     "typescript": "^4.6.3"

@@ -8,6 +8,7 @@ query ($id: Int, $type: MediaType) { # Define which variables will be used in th
       romaji
       english
       native
+      userPreferred
     }
     coverImage {
       large
@@ -40,7 +41,7 @@ query ($id: Int, $type: MediaType) { # Define which variables will be used in th
         id
         type
         title {
-          romaji
+          userPreferred
         }
         coverImage{
           large
