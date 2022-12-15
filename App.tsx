@@ -33,7 +33,7 @@ import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import {Ionicons} from "@expo/vector-icons";
 import Welcome from "./screens/Welcome";
 import Favorites from "./screens/Favorites";
-import {useColorScheme} from "react-native";
+import {Text, TouchableOpacity, useColorScheme} from "react-native";
 import {
     IconAbc,
     IconArtboard,
@@ -46,6 +46,7 @@ import {
 import AnimeShow from "./screens/AnimeShow";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import MangaList from "./screens/MangaList";
+import LogoutButton from "./components/Common/LogoutButton";
 
 const MyThemeLight = {
     ...DefaultTheme,
@@ -67,7 +68,8 @@ const App = () => {
     // const scheme = useColorScheme();
     const scheme = 'dark';
     const Tab = createBottomTabNavigator();
-    const AnimeListStack = createNativeStackNavigator();
+    // const AnimeListStack = createNativeStackNavigator();
+    const tailwind = useTailwind();
 
     return (
         <TailwindProvider utilities={utilities} colorScheme={scheme}>
@@ -131,6 +133,11 @@ const App = () => {
                     <Tab.Screen
                         name={'Account'}
                         component={Account}
+                        options={{
+                            headerRight: (props) => (
+                                <LogoutButton/>
+                            )
+                        }}
                     />
                 </Tab.Navigator>
             </NavigationContainer>
