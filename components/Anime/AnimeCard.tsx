@@ -1,5 +1,5 @@
 import React from "react";
-import {Text, Image, Pressable, View, TouchableOpacity, TouchableHighlight} from "react-native";
+import {Image, Text, TouchableOpacity, View} from "react-native";
 import {useTailwind} from "tailwind-rn";
 import {useNavigation} from "@react-navigation/native";
 import {LinearGradient} from "expo-linear-gradient";
@@ -7,8 +7,6 @@ import {LinearGradient} from "expo-linear-gradient";
 export default function AnimeCard({anime}) {
     const navigation = useNavigation();
     const tailwind = useTailwind();
-
-    // console.log('Anime Card:', anime)
 
     const handlePress = () => {
         navigation.navigate('AnimeShow', {

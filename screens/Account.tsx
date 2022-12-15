@@ -19,6 +19,7 @@ import LoadingScreen from "../components/Common/LoadingScreen";
 import {useUserStore} from "../store/zustand";
 import {updateProfile} from "../services/updateUserQuery";
 import Label from "../components/Common/Label";
+import Button from "../components/Common/Button";
 
 export default function Account({navigation}) {
     const tailwind = useTailwind();
@@ -90,19 +91,12 @@ export default function Account({navigation}) {
                                 placeholderTextColor={theme === 'dark' ? '#a1a1aa' : '#27272a'}
                             />
                         </View>
-
-                        <View style={tailwind('mt-4 w-full')}>
-                            <TouchableOpacity
-                                onPress={handleAuthenticate}
-                                style={tailwind('p-3 w-full rounded-md bg-teal-500')}
-                            >
-                                <Text
-                                    style={tailwind('text-white font-semibold text-center')}
-                                >
-                                    Authenticate
-                                </Text>
-                            </TouchableOpacity>
-                        </View>
+                        
+                        <Button
+                            onPress={handleAuthenticate}
+                            text={'Authenticate'}
+                            style={'mt-4'}
+                        />
                     </Card>
                 ) : (
                     <>
@@ -187,16 +181,11 @@ export default function Account({navigation}) {
                                     />
                                 </View>
 
-                                <TouchableOpacity
+                                <Button
                                     onPress={handleUpdateProfile}
-                                    style={tailwind('mt-4 p-3 w-full rounded-md bg-teal-500')}
-                                >
-                                    <Text
-                                        style={tailwind('text-white font-semibold text-center')}
-                                    >
-                                        Update
-                                    </Text>
-                                </TouchableOpacity>
+                                    text={'Update'}
+                                    style={'mt-4'}
+                                />
                             </Card>
                         )}
                     </>

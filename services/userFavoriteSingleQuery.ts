@@ -89,7 +89,7 @@ let options = (accessToken) => ({
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
-        'Authorization': 'Bearer ' + accessToken,
+        ...[!!accessToken ? {'Authorization': 'Bearer ' + accessToken} : null]
     },
     body: JSON.stringify({
         query: singleQuery,
@@ -114,8 +114,6 @@ export function handleError(error) {
 }
 
 export function retrieveData(accessToken) {
-    console.log('accessToken:', accessToken);
-
     // Make the HTTP Api request
     return fetch(url, options(accessToken))
         .then(handleResponse)

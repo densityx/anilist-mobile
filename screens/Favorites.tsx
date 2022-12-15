@@ -1,5 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from "react-native";
+import {RefreshControl, SafeAreaView, ScrollView, Text, View} from "react-native";
 import {useTailwind} from "tailwind-rn";
 import Card from "../components/Common/Card";
 import {IconInfoCircle} from "tabler-icons-react-native";
@@ -9,34 +9,33 @@ import AnimeCardHorizontal from "../components/Anime/AnimeCardHorizontal";
 import MangaCardHorizontal from "../components/Manga/MangaCardHorizontal";
 import AnimeShow from "./AnimeShow";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
-import {useNavigation} from "@react-navigation/native";
 import MangaShow from "./MangaShow";
 import {useUserStore} from "../store/zustand";
 import Label from '../components/Common/Label';
+import Button from '../components/Common/Button';
+import {useNavigation} from "@react-navigation/native";
 
 const FavoriteListComponent = () => {
     const tailwind = useTailwind();
-    const navigator = useNavigation();
     const [loading, setLoading] = useState(false);
     const [favoriteAnime, setFavoriteAnime] = useState([]);
     const [favoriteManga, setFavoriteManga] = useState([]);
     const theme = useUserStore(state => state.theme);
     const userToken = useUserStore(state => state.token);
+    const navigator = useNavigation();
 
     const getFavorites = useCallback(async () => {
         setLoading(true)
         let {data} = await retrieveData(userToken);
 
-        console.log('data anime:', data.User.favourites.anime.edges);
-        console.log('data manga:', data.User.favourites.manga.edges);
         setFavoriteAnime(data.User.favourites.anime.edges)
         setFavoriteManga(data.User.favourites.manga.edges)
         setLoading(false);
-    }, []);
+    }, [userToken]);
 
     useEffect(() => {
         getFavorites();
-    }, []);
+    }, [getFavorites, userToken]);
 
     return loading
         ? <LoadingScreen/>
@@ -45,7 +44,6 @@ const FavoriteListComponent = () => {
                 <ScrollView
                     refreshControl={
                         <RefreshControl
-                            colors={['#bada55']}
                             refreshing={loading}
                             onRefresh={getFavorites}
                         />
@@ -62,16 +60,11 @@ const FavoriteListComponent = () => {
                                 You have to authenticate to see this page
                             </Text>
 
-                            <TouchableOpacity
+                            <Button
                                 onPress={() => navigator.navigate('Account')}
-                                style={tailwind('mt-4 p-3 w-full rounded-md bg-teal-500')}
-                            >
-                                <Text
-                                    style={tailwind('text-white font-semibold text-center')}
-                                >
-                                    Authenticate
-                                </Text>
-                            </TouchableOpacity>
+                                text={'Authenticate'}
+                                style={'mt-4'}
+                            />
                         </Card>
                     ) : (
                         <>
