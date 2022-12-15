@@ -32,7 +32,7 @@ export default function AnimeShow({route}) {
 
     let getData = useCallback(async () => {
         let {data: {Media}} = await retrieveData(animeId, 'ANIME');
-        console.log(Media.description);
+        console.log('banner image: ', Media.bannerImage);
         // console.log(Media.recommendations.edges[0]);
         // let Media = {
         //     "coverImage": {"large": "https://s4.anilist.co/file/anilistcdn/media/manga/cover/medium/25191.jpg"},
@@ -55,7 +55,7 @@ export default function AnimeShow({route}) {
                     <View style={tailwind('relative flex items-center justify-center')}>
                         <Image
                             source={{
-                                uri: anime?.coverImage?.large
+                                uri: anime?.bannerImage
                             }}
                             style={tailwind('h-[320px] w-full')}
                         />
@@ -63,6 +63,13 @@ export default function AnimeShow({route}) {
                         <LinearGradient
                             colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,1)']}
                             style={tailwind('absolute top-0 right-0 left-0 h-full')}
+                        />
+
+                        <Image
+                            source={{
+                                uri: anime?.coverImage?.large
+                            }}
+                            style={tailwind('absolute top-0 mt-[60px] h-[160px] w-[120px] rounded-lg overflow-hidden')}
                         />
 
                         <View style={tailwind('flex flex-row absolute top-0 right-0 mt-4 mr-4')}>

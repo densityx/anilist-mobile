@@ -145,10 +145,13 @@ export default function AnimeList({navigation}) {
                 component={AnimeListComponent}
                 options={{title: 'Anime List', headerTitle: 'Anime List'}}
             />
+
             <AnimeListStack.Screen
                 name={'AnimeShow'}
                 component={AnimeShow}
-                options={({route}) => ({title: route.params.animeName})}
+                options={({route}) => ({
+                    title: route.params.animeName
+                })}
             />
         </AnimeListStack.Navigator>
     )

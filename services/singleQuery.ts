@@ -13,6 +13,7 @@ query ($id: Int, $type: MediaType) { # Define which variables will be used in th
     coverImage {
       large
     }
+    bannerImage
     description
     episodes
     duration

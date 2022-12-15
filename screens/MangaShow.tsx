@@ -54,7 +54,7 @@ export default function MangaShow({route}) {
                     <View style={tailwind('relative flex items-center justify-center')}>
                         <Image
                             source={{
-                                uri: manga?.coverImage?.large
+                                uri: manga?.bannerImage
                             }}
                             style={tailwind('h-[320px] w-full')}
                         />
@@ -62,6 +62,13 @@ export default function MangaShow({route}) {
                         <LinearGradient
                             colors={['rgba(0,0,0,0.3)', 'rgba(0,0,0,1)']}
                             style={tailwind('absolute top-0 right-0 left-0 h-full')}
+                        />
+
+                        <Image
+                            source={{
+                                uri: manga?.coverImage?.large
+                            }}
+                            style={tailwind('absolute top-0 mt-[60px] h-[160px] w-[120px] rounded-lg overflow-hidden')}
                         />
 
                         <View style={tailwind('flex flex-row absolute top-0 right-0 mt-4 mr-4')}>

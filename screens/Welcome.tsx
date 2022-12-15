@@ -1,9 +1,9 @@
 import React from "react";
-import {View, Text, Pressable} from "react-native";
+import {View, Text, TouchableOpacity, SafeAreaView} from "react-native";
 import {useTailwind} from "tailwind-rn";
 import Card from "../components/Common/Card";
 import {useBearStore} from "../store/zustand";
-import {IconHeart} from "tabler-icons-react-native";
+import {IconHeart, IconRefresh} from "tabler-icons-react-native";
 
 const DEPENDENCIES = [
     'React Native Expo',
@@ -24,10 +24,11 @@ export default function Welcome() {
     const tailwind = useTailwind();
     const bears = useBearStore((state) => state.bears);
     const increasePopulation = useBearStore((state) => state.increasePopulation);
+    const resetPopulation = useBearStore((state) => state.removeAllBears);
 
     return (
-        <View style={tailwind('p-4')}>
-            <Text style={tailwind('mt-3 dark:text-zinc-400 leading-[28px]')}>
+        <SafeAreaView style={tailwind('p-4')}>
+            <Text style={tailwind('dark:text-zinc-400 leading-[28px]')}>
                 About
             </Text>
 
@@ -40,18 +41,27 @@ export default function Welcome() {
                     This is sample React Native app (expo) project that consumes AniList GraphQL API
                 </Text>
 
-                <Pressable
-                    onPress={increasePopulation}
-                    style={tailwind('flex items-center justify-center flex-row mt-4 p-3 w-full rounded-md bg-rose-500')}
-                >
-                    <IconHeart color={'#fff'} size={16}/>
-
-                    <Text
-                        style={tailwind('ml-1 text-white font-semibold text-center')}
+                <View style={tailwind('relative flex flex-row justify-between w-full')}>
+                    <TouchableOpacity
+                        onPress={increasePopulation}
+                        style={tailwind('flex items-center justify-center flex-row w-9/12 mt-4 p-3 rounded-md bg-rose-500')}
                     >
-                        {bears}
-                    </Text>
-                </Pressable>
+                        <IconHeart color={'#fff'} size={16}/>
+
+                        <Text
+                            style={tailwind('ml-1 text-white font-semibold text-center')}
+                        >
+                            {bears}
+                        </Text>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        onPress={resetPopulation}
+                        style={tailwind('flex items-center justify-center flex-row w-2/12 mt-4 p-3 rounded-md bg-rose-500')}
+                    >
+                        <IconRefresh color={'#fff'} size={16}/>
+                    </TouchableOpacity>
+                </View>
             </View>
 
             <Text style={tailwind('mt-3 dark:text-zinc-400 leading-[28px]')}>
@@ -93,6 +103,6 @@ export default function Welcome() {
                     </Text>
                 </Card>
             </View>
-        </View>
+        </SafeAreaView>
     )
 }

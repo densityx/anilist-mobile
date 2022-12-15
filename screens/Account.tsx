@@ -3,10 +3,9 @@ import {useTailwind} from "tailwind-rn";
 import {
     View,
     Text,
-    Pressable,
     TextInput,
     SafeAreaView,
-    ActivityIndicator,
+    TouchableOpacity,
     Image,
     useWindowDimensions
 } from "react-native";
@@ -28,9 +27,6 @@ export default function Account({navigation}) {
     const setUserToken = useUserStore(state => state.setToken)
     const logoutUser = useUserStore(state => state.logout)
 
-    // const [id, setId] = useState('10323');
-    // const [secret, setSecret] = useState('7rB61K3gZobdd7apkZzhbLskGsc1qCPxWstP8ZKq')
-
     const getUser = useCallback(async () => {
         setLoading(true)
         let {data: {User}} = await retrieveData('dnstyx');
@@ -47,8 +43,6 @@ export default function Account({navigation}) {
     useEffect(() => {
         console.log('userToken: ', userToken)
     }, [userToken])
-
-    // useEffect(() => console.log('token', userToken), [userToken]);
 
     const handleAuthenticate = () => {
         setUserToken(authToken);
@@ -82,22 +76,8 @@ export default function Account({navigation}) {
                         />
                     </View>
 
-                    {/*<View style={tailwind('mt-3 w-full')}>*/}
-                    {/*    <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>*/}
-                    {/*        Anilist Secret*/}
-                    {/*    </Text>*/}
-
-                    {/*    <TextInput*/}
-                    {/*        style={tailwind('mt-3 px-3 py-2 w-full rounded-md bg-white dark:bg-zinc-800 border-2 border-zinc-800 dark:border-zinc-700 text-zinc-900 dark:text-white')}*/}
-                    {/*        placeholder={'Anilist Secret'}*/}
-                    {/*        value={secret}*/}
-                    {/*        onChangeText={(text) => setSecret(text)}*/}
-                    {/*        placeholderTextColor={scheme === 'dark' ? '#a1a1aa' : '#27272a'}*/}
-                    {/*    />*/}
-                    {/*</View>*/}
-
                     <View style={tailwind('mt-4 w-full')}>
-                        <Pressable
+                        <TouchableOpacity
                             onPress={handleAuthenticate}
                             style={tailwind('p-3 w-full rounded-md bg-teal-500')}
                         >
@@ -106,13 +86,13 @@ export default function Account({navigation}) {
                             >
                                 Authenticate
                             </Text>
-                        </Pressable>
+                        </TouchableOpacity>
                     </View>
                 </Card>
             ) : (
                 <Card styles={'flex items-center'}>
                     <View style={tailwind('relative flex items-center w-full')}>
-                        <Pressable
+                        <TouchableOpacity
                             onPress={handleLogout}
                             style={tailwind('absolute right-0 top-0 px-3 py-2 rounded-full bg-rose-500')}
                         >
@@ -121,7 +101,7 @@ export default function Account({navigation}) {
                             >
                                 Logout
                             </Text>
-                        </Pressable>
+                        </TouchableOpacity>
 
                         <View style={tailwind('bg-zinc-200 dark:bg-zinc-900 rounded-full overflow-hidden')}>
                             <Image

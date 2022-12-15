@@ -37,7 +37,7 @@ query ($id: Int, $page: Int, $perPage: Int, $search: String, $season: MediaSeaso
     media (id: $id, search: $search, type: ANIME) {
       id
       title {
-        romaji
+        userPreferred
       }
       description
       coverImage {
