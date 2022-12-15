@@ -21,14 +21,16 @@ import AnimeShow from "./AnimeShow";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useNavigation} from "@react-navigation/native";
 import MangaShow from "./MangaShow";
+import {useUserStore} from "../store/zustand";
 
 const FavoriteListComponent = () => {
     const scheme = 'dark';
     const tailwind = useTailwind();
+    const navigator = useNavigation();
     const [loading, setLoading] = useState(false);
     const [favoriteAnime, setFavoriteAnime] = useState([]);
     const [favoriteManga, setFavoriteManga] = useState([]);
-    const navigation = useNavigation();
+    const userToken = useUserStore(state => state.token);
 
     const getUser = useCallback(async () => {
         setLoading(true)
@@ -54,62 +56,77 @@ const FavoriteListComponent = () => {
         : (
             <ScrollView>
                 <SafeAreaView style={tailwind('p-4')}>
-                    <Card styles={'flex items-center justify-center bg-zinc-800 rounded-xl'}>
-                        <IconInfoCircle
-                            size={64}
-                            color={scheme === 'dark' ? '#f4f4f5' : '#52525b'}
-                        />
+                    {!userToken ? (
+                        <Card styles={'flex items-center justify-center bg-zinc-800 rounded-xl'}>
+                            <IconInfoCircle
+                                size={64}
+                                color={scheme === 'dark' ? '#f4f4f5' : '#52525b'}
+                            />
 
-                        <Text style={tailwind('mt-3 text-center text-zinc-800 dark:text-zinc-400 text-lg')}>
-                            You have to authenticate to see this page
-                        </Text>
-                    </Card>
+                            <Text style={tailwind('mt-3 text-center text-zinc-800 dark:text-zinc-400 text-lg')}>
+                                You have to authenticate to see this page
+                            </Text>
 
-                    <Card styles={'mt-4'}>
-                        <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
-                            All Favorite Anime
-                        </Text>
-
-                        {favoriteAnime.length ? (
-                            <View>
-                                {favoriteAnime?.map(anime => (
-                                    <AnimeCardHorizontal
-                                        key={anime?.node?.id}
-                                        anime={anime}
-                                    />
-                                ))}
-                            </View>
-                        ) : (
-                            <View>
-                                <Text style={tailwind('mt-3 dark:text-zinc-400')}>
-                                    You currently don't have any favourite anime list
+                            <Pressable
+                                onPress={() => navigator.navigate('Account')}
+                                style={tailwind('mt-4 p-3 w-full rounded-md bg-teal-500')}
+                            >
+                                <Text
+                                    style={tailwind('text-white font-semibold text-center')}
+                                >
+                                    Authenticate
                                 </Text>
-                            </View>
-                        )}
-                    </Card>
-
-                    <Card styles={'mt-4'}>
-                        <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
-                            All Favorite Manga
-                        </Text>
-
-                        {favoriteManga.length ? (
-                            <View>
-                                {favoriteManga?.map(manga => (
-                                    <MangaCardHorizontal
-                                        key={manga?.node?.id}
-                                        manga={manga}
-                                    />
-                                ))}
-                            </View>
-                        ) : (
-                            <View>
-                                <Text style={tailwind('mt-3 dark:text-zinc-400')}>
-                                    You currently don't have any favourite manga list
+                            </Pressable>
+                        </Card>
+                    ) : (
+                        <>
+                            <Card>
+                                <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
+                                    All Favorite Anime
                                 </Text>
-                            </View>
-                        )}
-                    </Card>
+
+                                {favoriteAnime.length ? (
+                                    <View>
+                                        {favoriteAnime?.map(anime => (
+                                            <AnimeCardHorizontal
+                                                key={anime?.node?.id}
+                                                anime={anime}
+                                            />
+                                        ))}
+                                    </View>
+                                ) : (
+                                    <View>
+                                        <Text style={tailwind('mt-3 dark:text-zinc-400')}>
+                                            You currently don't have any favourite anime list
+                                        </Text>
+                                    </View>
+                                )}
+                            </Card>
+
+                            <Card styles={'mt-4'}>
+                                <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
+                                    All Favorite Manga
+                                </Text>
+
+                                {favoriteManga.length ? (
+                                    <View>
+                                        {favoriteManga?.map(manga => (
+                                            <MangaCardHorizontal
+                                                key={manga?.node?.id}
+                                                manga={manga}
+                                            />
+                                        ))}
+                                    </View>
+                                ) : (
+                                    <View>
+                                        <Text style={tailwind('mt-3 dark:text-zinc-400')}>
+                                            You currently don't have any favourite manga list
+                                        </Text>
+                                    </View>
+                                )}
+                            </Card>
+                        </>
+                    )}
                 </SafeAreaView>
             </ScrollView>
         )

@@ -262,7 +262,7 @@ export default function AnimeShow({route}) {
                                         <View
                                             style={tailwind('absolute flex justify-end bottom-0 left-0 h-[54px] p-2')}>
                                             <Text
-                                                style={tailwind('mt-2 font-medium text-white')}>{other?.title?.romaji}</Text>
+                                                style={tailwind('mt-2 font-medium text-white')}>{other?.title?.userPreferred}</Text>
                                         </View>
                                     </Pressable>
                                 ))}
