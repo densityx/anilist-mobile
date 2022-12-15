@@ -1,9 +1,4 @@
-import {
-    View,
-    Text,
-    TextInput,
-    Appearance, ActivityIndicator, FlatList, SafeAreaView
-} from "react-native";
+import {ActivityIndicator, FlatList, SafeAreaView, Text, TextInput, View} from "react-native";
 import React, {useCallback, useEffect, useState} from "react";
 import {retrieveData} from "../services/paginatedQueryManga";
 import {useTailwind} from "tailwind-rn";
@@ -16,7 +11,7 @@ import LoadingScreen from "../components/Common/LoadingScreen";
 import Card from "../components/Common/Card";
 import {useUserStore} from "../store/zustand";
 
-const MangaListComponent = ({navigation}) => {
+const MangaListScreen = () => {
     let theme = useUserStore(state => state.theme);
 
     const tailwind = useTailwind();
@@ -34,7 +29,6 @@ const MangaListComponent = ({navigation}) => {
         let {
             data: {
                 Page: {media: retrievedManga, pageInfo: {hasNextPage}},
-                // popular: {media: popularManga},
                 trending: {
                     media: seasonalManga,
                     pageInfo: {hasNextPage: hasNextTrending}
@@ -72,9 +66,6 @@ const MangaListComponent = ({navigation}) => {
             setMangas([...mangas, ...retrievedManga]);
             setHasNextPage(hasNextPage);
         } else {
-            // setMangas(seasonalManga);
-            // setHasNextPage(hasNextTrending)
-
             setMangas([...mangas, ...seasonalManga]);
             setHasNextPage(hasNextTrending);
         }
@@ -90,8 +81,6 @@ const MangaListComponent = ({navigation}) => {
     useEffect(() => {
         retrieveManga();
     }, [retrieveManga, debounced]);
-
-    // return <Text>working</Text>;
 
     return (
         <SafeAreaView style={{flex: 1}}>
@@ -146,14 +135,14 @@ const MangaListComponent = ({navigation}) => {
     )
 }
 
-export default function MangaList({navigation}) {
+export default function MangaList() {
     const MangaListStack = createNativeStackNavigator();
 
     return (
         <MangaListStack.Navigator>
             <MangaListStack.Screen
-                name={'MangaListComponent'}
-                component={MangaListComponent}
+                name={'MangaListScreen'}
+                component={MangaListScreen}
                 options={{title: 'Manga List'}}
             />
             <MangaListStack.Screen

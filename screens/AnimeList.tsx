@@ -1,9 +1,4 @@
-import {
-    View,
-    Text,
-    TextInput,
-    Appearance, ActivityIndicator, FlatList, SafeAreaView
-} from "react-native";
+import {ActivityIndicator, FlatList, SafeAreaView, Text, TextInput, View} from "react-native";
 import React, {useCallback, useEffect, useState} from "react";
 import {retrieveData} from "../services/paginatedQuery";
 import {useTailwind} from "tailwind-rn";
@@ -16,7 +11,7 @@ import LoadingScreen from "../components/Common/LoadingScreen";
 import Card from "../components/Common/Card";
 import {useUserStore} from "../store/zustand";
 
-const AnimeListComponent = ({navigation}) => {
+const AnimeListComponent = () => {
     let theme = useUserStore(state => state.theme)
 
     const tailwind = useTailwind();
@@ -33,13 +28,10 @@ const AnimeListComponent = ({navigation}) => {
         setPage(1)
         let {
             data: {
-                // popular: {media: popularAnime},
                 Page: {media: retrievedAnime, pageInfo: {hasNextPage}},
                 season: {media: seasonalAnime, pageInfo: {hasNextPage: hasNextSeasonPage}},
             }
         } = await retrieveData(debounced, 1, 'ANIME')
-
-        // console.log('seasonalAnime anime: ', JSON.stringify(seasonalAnime, null, 4));
 
         if (term.length) {
             setAnimes(retrievedAnime);
@@ -64,9 +56,6 @@ const AnimeListComponent = ({navigation}) => {
             setAnimes([...animes, ...retrievedAnime]);
             setHasNextPage(hasNextPage);
         } else {
-            // setAnimes(seasonalAnime);
-            // setHasNextPage(hasNextSeasonPage)
-
             setAnimes([...animes, ...seasonalAnime]);
             setHasNextPage(hasNextSeasonPage);
         }

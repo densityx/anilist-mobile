@@ -3,6 +3,7 @@ import {LinearGradient} from "expo-linear-gradient";
 import React from "react";
 import {useNavigation} from "@react-navigation/native";
 import {useTailwind} from "tailwind-rn";
+import Tag from "../Common/Tag";
 
 export default function AnimeCardHorizontal({anime}) {
     const navigation = useNavigation();
@@ -44,12 +45,7 @@ export default function AnimeCardHorizontal({anime}) {
                         style={tailwind('flex flex-row flex-wrap w-full')}
                     >
                         {anime?.node?.genres?.map((genre, index) => (
-                            <Text
-                                key={index}
-                                style={tailwind('mr-2 mt-2 px-2 py-1 h-[28px] rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 text-sm border border-zinc-300 dark:border-zinc-400')}
-                            >
-                                {genre}
-                            </Text>
+                            <Tag genre={genre} key={index} style={'mr-2 mt-2'}/>
                         ))}
                     </View>
 

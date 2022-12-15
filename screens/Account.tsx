@@ -1,13 +1,15 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {useTailwind} from "tailwind-rn";
 import {
-    View,
+    Image,
+    RefreshControl,
+    SafeAreaView,
+    ScrollView,
     Text,
     TextInput,
-    SafeAreaView,
     TouchableOpacity,
-    Image,
-    useWindowDimensions, ScrollView, RefreshControl
+    useWindowDimensions,
+    View
 } from "react-native";
 import Card from "../components/Common/Card";
 import {IconMoon, IconPencil, IconSun, IconUserCircle} from "tabler-icons-react-native";
@@ -16,6 +18,7 @@ import RenderHtml from 'react-native-render-html';
 import LoadingScreen from "../components/Common/LoadingScreen";
 import {useUserStore} from "../store/zustand";
 import {updateProfile} from "../services/updateUserQuery";
+import Label from "../components/Common/Label";
 
 export default function Account({navigation}) {
     const tailwind = useTailwind();
@@ -58,7 +61,7 @@ export default function Account({navigation}) {
     }
 
     return loading ? <LoadingScreen/> : (
-        <SafeAreaView style={tailwind('p-4 h-full')}>
+        <SafeAreaView style={tailwind('m-4 h-full')}>
             <ScrollView
                 refreshControl={
                     <RefreshControl
@@ -140,9 +143,11 @@ export default function Account({navigation}) {
                                     {user?.name}
                                 </Text>
 
-                                <Text style={tailwind('mt-2 px-3 py-2 text-xs text-teal-50 rounded-full bg-teal-400')}>
-                                    {user?.id}
-                                </Text>
+                                <View style={tailwind('mt-2 rounded-xl bg-teal-400')}>
+                                    <Text style={tailwind('px-3 py-2 text-xs text-white')}>
+                                        {user?.id}
+                                    </Text>
+                                </View>
 
                                 {!!user?.about && (
                                     <View
@@ -169,9 +174,9 @@ export default function Account({navigation}) {
                                         Edit User Details
                                     </Text>
 
-                                    <Text style={tailwind('mt-3 text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
+                                    <Label>
                                         About
-                                    </Text>
+                                    </Label>
 
                                     <TextInput
                                         style={tailwind('mt-3 px-3 py-2 w-full rounded-md bg-white dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white')}

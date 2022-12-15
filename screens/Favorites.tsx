@@ -1,11 +1,5 @@
 import React, {useCallback, useEffect, useState} from 'react';
-import {
-    View,
-    Text,
-    SafeAreaView,
-    ScrollView,
-    TouchableOpacity, RefreshControl
-} from "react-native";
+import {RefreshControl, SafeAreaView, ScrollView, Text, TouchableOpacity, View} from "react-native";
 import {useTailwind} from "tailwind-rn";
 import Card from "../components/Common/Card";
 import {IconInfoCircle} from "tabler-icons-react-native";
@@ -18,6 +12,7 @@ import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useNavigation} from "@react-navigation/native";
 import MangaShow from "./MangaShow";
 import {useUserStore} from "../store/zustand";
+import Label from '../components/Common/Label';
 
 const FavoriteListComponent = () => {
     const tailwind = useTailwind();
@@ -30,7 +25,7 @@ const FavoriteListComponent = () => {
 
     const getFavorites = useCallback(async () => {
         setLoading(true)
-        let {data} = await retrieveData();
+        let {data} = await retrieveData(userToken);
 
         console.log('data anime:', data.User.favourites.anime.edges);
         console.log('data manga:', data.User.favourites.manga.edges);
@@ -46,10 +41,11 @@ const FavoriteListComponent = () => {
     return loading
         ? <LoadingScreen/>
         : (
-            <SafeAreaView style={tailwind('p-4')}>
+            <SafeAreaView style={tailwind('m-4')}>
                 <ScrollView
                     refreshControl={
                         <RefreshControl
+                            colors={['#bada55']}
                             refreshing={loading}
                             onRefresh={getFavorites}
                         />
@@ -80,9 +76,9 @@ const FavoriteListComponent = () => {
                     ) : (
                         <>
                             <Card>
-                                <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
+                                <Label>
                                     All Favorite Anime
-                                </Text>
+                                </Label>
 
                                 {favoriteAnime.length ? (
                                     <View>
@@ -103,9 +99,9 @@ const FavoriteListComponent = () => {
                             </Card>
 
                             <Card styles={'mt-4'}>
-                                <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
+                                <Label>
                                     All Favorite Manga
-                                </Text>
+                                </Label>
 
                                 {favoriteManga.length ? (
                                     <View>
@@ -146,18 +142,14 @@ export default function Favorites() {
                 component={AnimeShow}
                 options={({route}) => ({
                     title: route.params.animeName,
-                    from: 'Favorites'
                 })}
-                // options={({route}) => ({headerTitle: route.params.animeName})}
             />
             <FavoriteStack.Screen
                 name={'MangaShow'}
                 component={MangaShow}
                 options={({route}) => ({
                     title: route.params.mangaName,
-                    from: 'Favorites',
                 })}
-                // options={({route}) => ({headerTitle: route.params.mangaName})}
             />
         </FavoriteStack.Navigator>
     );

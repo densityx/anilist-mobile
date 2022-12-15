@@ -1,14 +1,13 @@
 import React, {useCallback, useEffect, useState} from "react";
 import {
-    View,
-    Text,
     Image,
-    ScrollView,
-    SafeAreaView,
-    StyleSheet,
     Pressable,
+    RefreshControl,
+    SafeAreaView,
+    ScrollView,
+    Text,
     useWindowDimensions,
-    TouchableOpacity, RefreshControl
+    View
 } from "react-native";
 import {retrieveData} from "../services/singleQuery";
 import {useTailwind} from "tailwind-rn";
@@ -18,8 +17,11 @@ import Svg, {Path} from "react-native-svg";
 import Card from "../components/Common/Card";
 import RenderHtml from 'react-native-render-html';
 import LoadingScreen from "../components/Common/LoadingScreen";
-import YoutubePlayer from 'react-native-youtube-iframe';
 import AnimeTrailer from "../components/Anime/AnimeTrailer";
+import Tag from "../components/Common/Tag";
+import OtherAdaptationCard from "../components/Common/OtherAdaptationCard";
+import DataDetail from "../components/Common/DataDetail";
+import Label from "../components/Common/Label";
 
 export default function AnimeShow({route}) {
     const tailwind = useTailwind();
@@ -33,14 +35,6 @@ export default function AnimeShow({route}) {
     let getData = useCallback(async () => {
         setLoading(true);
         let {data: {Media}} = await retrieveData(animeId, 'ANIME');
-        console.log('banner image: ', Media.bannerImage);
-        // console.log(Media.recommendations.edges[0]);
-        // let Media = {
-        //     "coverImage": {"large": "https://s4.anilist.co/file/anilistcdn/media/manga/cover/medium/25191.jpg"},
-        //     "id": 55191,
-        //     "title": {"english": null, "native": "Fate/Zero", "romaji": "Fate/Zero"}
-        // };
-
         setAnime(Media);
         setLoading(false);
     }, []);
@@ -127,31 +121,14 @@ export default function AnimeShow({route}) {
                             </Text>
 
                             <View style={tailwind('mt-3')}>
-                                <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
+                                <Label>
                                     Genres
-                                </Text>
+                                </Label>
 
                                 <ScrollView horizontal={true} style={tailwind('mt-2')}>
                                     {anime.genres.map((genre, index) => (
-                                        <Text
-                                            key={index}
-                                            style={tailwind('mr-2 mt-2 px-2 py-1 h-[28px] rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 text-sm border border-zinc-300 dark:border-zinc-400')}
-                                        >
-                                            {genre}
-                                        </Text>
+                                        <Tag genre={genre} key={index} style={'mr-2'}/>
                                     ))}
-
-                                    {/*{!!anime?.title?.english &&*/}
-                                    {/*    <Text style={tailwind('p-2 rounded-xl bg-teal-400 text-white text-sm mr-3')}>*/}
-                                    {/*        {anime?.title?.english}*/}
-                                    {/*    </Text>*/}
-                                    {/*}*/}
-
-                                    {/*{!!anime?.title?.native &&*/}
-                                    {/*    <Text style={tailwind('p-2 rounded-xl bg-teal-400 text-white text-sm mr-3')}>*/}
-                                    {/*        {anime?.title?.native}*/}
-                                    {/*    </Text>*/}
-                                    {/*}*/}
                                 </ScrollView>
                             </View>
 
@@ -185,102 +162,41 @@ export default function AnimeShow({route}) {
                             {!loading && <AnimeTrailer anime={anime}/>}
 
                             <View style={tailwind('flex flex-row flex-wrap mt-4')}>
-                                {!!anime?.episodes &&
-                                    <View style={tailwind('mt-4 w-1/2')}>
-                                        <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
-                                            Episodes
-                                        </Text>
 
-                                        <Text style={tailwind('mt-2 font-medium text-zinc-800 dark:text-zinc-400')}>
-                                            {anime?.episodes}
-                                        </Text>
-                                    </View>
-                                }
+                                <DataDetail
+                                    hasMedia={!!anime?.episodes}
+                                    name={'Episodes'}
+                                    value={anime?.episodes}
+                                />
 
-                                {!!anime?.duration &&
-                                    <View style={tailwind('mt-4 w-1/2')}>
-                                        <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
-                                            Duration
-                                        </Text>
+                                <DataDetail
+                                    hasMedia={!!anime?.duration}
+                                    name={'Duration'}
+                                    value={anime?.duration + ' mins'}
+                                />
 
-                                        <Text style={tailwind('mt-2 font-medium text-zinc-800 dark:text-zinc-400')}>
-                                            {anime?.duration} mins
-                                        </Text>
-                                    </View>
-                                }
+                                <DataDetail
+                                    hasMedia={!!anime?.startDate?.day}
+                                    name={'Start Date'}
+                                    value={anime?.startDate?.day + '/' + anime?.startDate?.month + '/' + anime?.startDate?.year}
+                                />
 
-                                {!!anime?.startDate?.day &&
-                                    <View style={tailwind('mt-4 w-1/2')}>
-                                        <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
-                                            Start Date
-                                        </Text>
-
-                                        <Text style={tailwind('mt-2 font-medium text-zinc-800 dark:text-zinc-400')}>
-                                            {anime?.startDate?.day} / {anime?.startDate?.month} / {anime?.startDate?.year}
-                                        </Text>
-                                    </View>
-                                }
-
-                                {!!anime?.endDate?.day &&
-                                    <View style={tailwind('mt-4 w-1/2')}>
-                                        <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
-                                            End Date
-                                        </Text>
-
-                                        <Text style={tailwind('mt-2 font-medium text-zinc-800 dark:text-zinc-400')}>
-                                            {anime?.endDate?.day} / {anime?.endDate?.month} / {anime?.endDate?.year}
-                                        </Text>
-                                    </View>
-                                }
+                                <DataDetail
+                                    hasMedia={!!anime?.endDate?.day}
+                                    name={'Start Date'}
+                                    value={anime?.endDate?.day + '/' + anime?.endDate?.month + '/' + anime?.endDate?.year}
+                                />
                             </View>
                         </Card>
 
                         <Card styles={'mt-3'}>
-                            <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
+                            <Label>
                                 Other Adaptation
-                            </Text>
+                            </Label>
 
                             <ScrollView horizontal={true} style={tailwind('mt-3')}>
-                                {anime.relations.nodes.map(other => (
-                                    <Pressable
-                                        key={other?.id}
-                                        style={tailwind('relative mr-2 rounded-lg overflow-hidden w-[120px]')}
-                                        onPress={() => {
-                                            navigation.goBack();
-
-                                            if (other?.type === 'ANIME') {
-                                                navigation.navigate('AnimeShow', {
-                                                    animeId: other?.id,
-                                                    animeName: other?.title?.userPreferred,
-                                                })
-                                            }
-
-                                            if (other?.type === 'MANGA') {
-                                                navigation.navigate('MangaShow', {
-                                                    mangaId: other?.id,
-                                                    mangaName: other?.title?.userPreferred,
-                                                })
-                                            }
-                                        }}
-                                    >
-                                        <Image
-                                            source={{
-                                                uri: other?.coverImage?.large
-                                            }}
-                                            style={tailwind('h-[180px] w-full')}
-                                        />
-
-                                        <LinearGradient
-                                            colors={['rgba(0,0,0,0.1)', 'rgba(0,0,0,0.9)']}
-                                            style={tailwind('absolute top-0 right-0 left-0 h-full')}
-                                        />
-
-                                        <View
-                                            style={tailwind('absolute flex justify-end bottom-0 left-0 h-[54px] p-2')}>
-                                            <Text
-                                                style={tailwind('mt-2 font-medium text-white')}>{other?.title?.userPreferred}</Text>
-                                        </View>
-                                    </Pressable>
+                                {anime?.relations?.nodes?.map(anime => (
+                                    <OtherAdaptationCard key={anime?.id} anime={anime}/>
                                 ))}
                             </ScrollView>
                         </Card>

@@ -31,6 +31,7 @@ query (
                 genres
                 trending
                 favourites
+                isFavourite
                 title {
                   userPreferred
                 }
@@ -63,6 +64,7 @@ query (
                 genres
                 trending
                 favourites
+                isFavourite
                 title {
                   userPreferred
                 }
@@ -82,11 +84,12 @@ query (
 
 // Define the config we'll need for our Api request
 let url = 'https://graphql.anilist.co';
-let options = () => ({
+let options = (accessToken) => ({
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        'Authorization': 'Bearer ' + accessToken,
     },
     body: JSON.stringify({
         query: singleQuery,
@@ -110,9 +113,11 @@ export function handleError(error) {
     console.error(error);
 }
 
-export function retrieveData() {
+export function retrieveData(accessToken) {
+    console.log('accessToken:', accessToken);
+
     // Make the HTTP Api request
-    return fetch(url, options())
+    return fetch(url, options(accessToken))
         .then(handleResponse)
         .catch(handleError);
 }

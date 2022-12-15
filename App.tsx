@@ -1,50 +1,13 @@
-// import {TailwindProvider, useTailwind} from 'tailwind-rn';
-// import utilities from './tailwind.json';
-// import React from 'react';
-// import AnimeList from "./components/AnimeList";
-// import {SafeAreaView, View, Text} from "react-native";
-//
-// export default function App() {
-//     const tailwind = useTailwind();
-//
-//     return (
-//         <TailwindProvider utilities={utilities}>
-//             <SafeAreaView style={tailwind('h-full')}>
-//                 <View style={tailwind('pt-12 items-center')}>
-//                     <View style={tailwind('bg-blue-200 px-3 py-1 rounded-full')}>
-//                         <Text style={tailwind('text-blue-800 font-semibold')}>
-//                             Hello Tailwind
-//                         </Text>
-//                     </View>
-//                 </View>
-//             </SafeAreaView>
-//             {/*<AnimeList/>*/}
-//         </TailwindProvider>
-//     )
-// }
-
 import React from "react";
-import {TailwindProvider, useTailwind} from 'tailwind-rn';
+import {TailwindProvider} from 'tailwind-rn';
 import utilities from './tailwind.json';
 import AnimeList from "./screens/AnimeList";
 import {DarkTheme, DefaultTheme, NavigationContainer} from "@react-navigation/native";
 import Account from "./screens/Account";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
-import {Ionicons} from "@expo/vector-icons";
 import Welcome from "./screens/Welcome";
 import Favorites from "./screens/Favorites";
-import {Text, TouchableOpacity, useColorScheme} from "react-native";
-import {
-    IconAbc,
-    IconArtboard,
-    IconBraces,
-    IconHeart,
-    IconHome2,
-    IconLayoutList,
-    IconUserCircle
-} from 'tabler-icons-react-native';
-import AnimeShow from "./screens/AnimeShow";
-import {createNativeStackNavigator} from "@react-navigation/native-stack";
+import {IconArtboard, IconBraces, IconHeart, IconLayoutList, IconUserCircle} from 'tabler-icons-react-native';
 import MangaList from "./screens/MangaList";
 import LogoutButton from "./components/Common/LogoutButton";
 import {useUserStore} from "./store/zustand";
@@ -66,12 +29,8 @@ const MyThemeDark = {
 }
 
 const App = () => {
-    // const theme = useColorScheme();
-    // const theme = 'dark';
     const theme = useUserStore(state => state.theme)
     const Tab = createBottomTabNavigator();
-    // const AnimeListStack = createNativeStackNavigator();
-    const tailwind = useTailwind();
 
     return (
         <TailwindProvider utilities={utilities} colorScheme={theme}>
@@ -104,9 +63,6 @@ const App = () => {
                             if (route.name === 'Account') {
                                 return <IconUserCircle color={color} size={size}/>;
                             }
-
-                            // You can return any component that you like here!
-                            // return <Ionicons name={iconName} size={size} color={color}/>;
                         },
                         tabBarActiveTintColor: 'teal',
                         tabBarInactiveTintColor: 'gray'
@@ -115,7 +71,7 @@ const App = () => {
                     <Tab.Screen
                         name={'Welcome'}
                         component={Welcome}
-                        options={{title: 'Welcome', headerTitle: 'Welcome to Anilist Mobile'}}
+                        options={{title: 'Welcome', headerTitle: 'Welcome to AniList Mobile'}}
                     />
                     <Tab.Screen
                         name={'AnimeList'}
