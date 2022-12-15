@@ -14,9 +14,10 @@ import {useDebouncedValue} from "@mantine/hooks";
 import {IconSearch} from "tabler-icons-react-native";
 import LoadingScreen from "../components/Common/LoadingScreen";
 import Card from "../components/Common/Card";
+import {useUserStore} from "../store/zustand";
 
 const AnimeListComponent = ({navigation}) => {
-    let scheme = 'dark';
+    let theme = useUserStore(state => state.theme)
 
     const tailwind = useTailwind();
     const [term, setTerm] = useState('')
@@ -90,11 +91,11 @@ const AnimeListComponent = ({navigation}) => {
                     placeholder={'Search anime...'}
                     value={term}
                     onChangeText={(text) => setTerm(text)}
-                    placeholderTextColor={scheme === 'dark' ? '#a1a1aa' : '#27272a'}
+                    placeholderTextColor={theme === 'dark' ? '#a1a1aa' : '#27272a'}
                 />
 
                 <IconSearch
-                    color={scheme === 'dark' ? '#f4f4f5' : '#52525b'}
+                    color={theme === 'dark' ? '#52525b' : '#a1a1aa'}
                     style={tailwind('absolute ml-6')}
                     size={16}
                 />

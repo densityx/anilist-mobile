@@ -47,6 +47,7 @@ import AnimeShow from "./screens/AnimeShow";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import MangaList from "./screens/MangaList";
 import LogoutButton from "./components/Common/LogoutButton";
+import {useUserStore} from "./store/zustand";
 
 const MyThemeLight = {
     ...DefaultTheme,
@@ -65,15 +66,16 @@ const MyThemeDark = {
 }
 
 const App = () => {
-    // const scheme = useColorScheme();
-    const scheme = 'dark';
+    // const theme = useColorScheme();
+    // const theme = 'dark';
+    const theme = useUserStore(state => state.theme)
     const Tab = createBottomTabNavigator();
     // const AnimeListStack = createNativeStackNavigator();
     const tailwind = useTailwind();
 
     return (
-        <TailwindProvider utilities={utilities} colorScheme={scheme}>
-            <NavigationContainer theme={scheme == 'dark' ? MyThemeDark : MyThemeLight}>
+        <TailwindProvider utilities={utilities} colorScheme={theme}>
+            <NavigationContainer theme={theme == 'dark' ? MyThemeDark : MyThemeLight}>
                 <Tab.Navigator
                     initialRouteName={'Welcome'}
                     id={'DefaultTabNavigator'}

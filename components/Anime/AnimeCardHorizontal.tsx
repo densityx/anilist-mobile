@@ -46,8 +46,7 @@ export default function AnimeCardHorizontal({anime}) {
                         {anime?.node?.genres?.map((genre, index) => (
                             <Text
                                 key={index}
-                                style={tailwind('mr-2 mt-2 px-2 py-1 h-[28px] rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 text-sm border border-zinc-800 dark:border-zinc-400')}
-
+                                style={tailwind('mr-2 mt-2 px-2 py-1 h-[28px] rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 text-sm border border-zinc-300 dark:border-zinc-400')}
                             >
                                 {genre}
                             </Text>

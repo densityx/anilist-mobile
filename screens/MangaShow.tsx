@@ -8,7 +8,7 @@ import {
     StyleSheet,
     Pressable,
     useWindowDimensions,
-    TouchableOpacity
+    TouchableOpacity, RefreshControl
 } from "react-native";
 import {retrieveData} from "../services/singleQuery";
 import {useTailwind} from "tailwind-rn";
@@ -49,8 +49,15 @@ export default function MangaShow({route}) {
     return loading
         ? <LoadingScreen/>
         : (
-            <ScrollView>
-                <SafeAreaView>
+            <SafeAreaView>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={loading}
+                            onRefresh={getData}
+                        />
+                    }
+                >
                     <View style={tailwind('relative flex items-center justify-center')}>
                         <Image
                             source={{
@@ -125,7 +132,7 @@ export default function MangaShow({route}) {
                                     {manga.genres.map((genre, index) => (
                                         <Text
                                             key={index}
-                                            style={tailwind('p-2 rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 text-sm mr-3 border-2 border-zinc-800 dark:border-zinc-400')}
+                                            style={tailwind('mr-2 mt-2 px-2 py-1 h-[28px] rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 text-sm border border-zinc-300 dark:border-zinc-400')}
                                         >
                                             {genre}
                                         </Text>
@@ -311,7 +318,7 @@ export default function MangaShow({route}) {
                             </ScrollView>
                         </Card>
                     </View>
-                </SafeAreaView>
-            </ScrollView>
+                </ScrollView>
+            </SafeAreaView>
         );
 }

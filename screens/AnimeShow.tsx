@@ -8,7 +8,7 @@ import {
     StyleSheet,
     Pressable,
     useWindowDimensions,
-    TouchableOpacity
+    TouchableOpacity, RefreshControl
 } from "react-native";
 import {retrieveData} from "../services/singleQuery";
 import {useTailwind} from "tailwind-rn";
@@ -31,6 +31,7 @@ export default function AnimeShow({route}) {
     const [descriptionExpand, setDescriptionExpand] = useState(false);
 
     let getData = useCallback(async () => {
+        setLoading(true);
         let {data: {Media}} = await retrieveData(animeId, 'ANIME');
         console.log('banner image: ', Media.bannerImage);
         // console.log(Media.recommendations.edges[0]);
@@ -41,6 +42,7 @@ export default function AnimeShow({route}) {
         // };
 
         setAnime(Media);
+        setLoading(false);
     }, []);
 
     useEffect(() => {
@@ -50,8 +52,15 @@ export default function AnimeShow({route}) {
     return loading
         ? <LoadingScreen/>
         : (
-            <ScrollView>
-                <SafeAreaView>
+            <SafeAreaView>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={loading}
+                            onRefresh={getData}
+                        />
+                    }
+                >
                     <View style={tailwind('relative flex items-center justify-center')}>
                         <Image
                             source={{
@@ -126,7 +135,7 @@ export default function AnimeShow({route}) {
                                     {anime.genres.map((genre, index) => (
                                         <Text
                                             key={index}
-                                            style={tailwind('p-2 rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 text-sm mr-3 border-2 border-zinc-800 dark:border-zinc-400')}
+                                            style={tailwind('mr-2 mt-2 px-2 py-1 h-[28px] rounded-xl bg-zinc-200 dark:bg-zinc-800 text-zinc-800 dark:text-zinc-300 text-sm border border-zinc-300 dark:border-zinc-400')}
                                         >
                                             {genre}
                                         </Text>
@@ -173,7 +182,7 @@ export default function AnimeShow({route}) {
                                 </View>
                             )}
 
-                            <AnimeTrailer anime={anime}/>
+                            {!loading && <AnimeTrailer anime={anime}/>}
 
                             <View style={tailwind('flex flex-row flex-wrap mt-4')}>
                                 {!!anime?.episodes &&
@@ -276,7 +285,7 @@ export default function AnimeShow({route}) {
                             </ScrollView>
                         </Card>
                     </View>
-                </SafeAreaView>
-            </ScrollView>
+                </ScrollView>
+            </SafeAreaView>
         );
 }

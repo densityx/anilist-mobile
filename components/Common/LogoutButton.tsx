@@ -12,13 +12,13 @@ export default function LogoutButton() {
     return !!hasUser && (
         <TouchableOpacity
             onPress={() => logoutUser()}
-            style={tailwind('flex flex-row p-2 rounded-full bg-rose-500 mr-4')}
+            style={tailwind('flex flex-row items-center mr-4 p-2 border border-rose-500 rounded-xl')}
         >
-            <Text style={tailwind('mr-2 text-sm text-white font-semibold text-center')}>
+            <Text style={tailwind('mr-2 text-sm text-rose-500 font-semibold text-center')}>
                 Logout
             </Text>
 
-            <IconDoor color={'#fff'} size={16}/>
+            <IconDoor color={'#f43f5e'} size={16}/>
         </TouchableOpacity>
     )
 }

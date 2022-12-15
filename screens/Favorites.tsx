@@ -4,7 +4,7 @@ import {
     Text,
     SafeAreaView,
     ScrollView,
-    TouchableOpacity
+    TouchableOpacity, RefreshControl
 } from "react-native";
 import {useTailwind} from "tailwind-rn";
 import Card from "../components/Common/Card";
@@ -20,15 +20,15 @@ import MangaShow from "./MangaShow";
 import {useUserStore} from "../store/zustand";
 
 const FavoriteListComponent = () => {
-    const scheme = 'dark';
     const tailwind = useTailwind();
     const navigator = useNavigation();
     const [loading, setLoading] = useState(false);
     const [favoriteAnime, setFavoriteAnime] = useState([]);
     const [favoriteManga, setFavoriteManga] = useState([]);
+    const theme = useUserStore(state => state.theme);
     const userToken = useUserStore(state => state.token);
 
-    const getUser = useCallback(async () => {
+    const getFavorites = useCallback(async () => {
         setLoading(true)
         let {data} = await retrieveData();
 
@@ -36,27 +36,30 @@ const FavoriteListComponent = () => {
         console.log('data manga:', data.User.favourites.manga.edges);
         setFavoriteAnime(data.User.favourites.anime.edges)
         setFavoriteManga(data.User.favourites.manga.edges)
-
-        // console.log('genres', favoriteAnime[0]?.node?.genres);
-        // setFavoriteAnime(data)
-        // setFavoriteManga(data)
         setLoading(false);
     }, []);
 
     useEffect(() => {
-        getUser();
+        getFavorites();
     }, []);
 
     return loading
         ? <LoadingScreen/>
         : (
-            <ScrollView>
-                <SafeAreaView style={tailwind('p-4')}>
+            <SafeAreaView style={tailwind('p-4')}>
+                <ScrollView
+                    refreshControl={
+                        <RefreshControl
+                            refreshing={loading}
+                            onRefresh={getFavorites}
+                        />
+                    }
+                >
                     {!userToken ? (
-                        <Card styles={'flex items-center justify-center bg-zinc-800 rounded-xl'}>
+                        <Card styles={'flex items-center justify-center rounded-xl'}>
                             <IconInfoCircle
                                 size={64}
-                                color={scheme === 'dark' ? '#f4f4f5' : '#52525b'}
+                                color={theme === 'dark' ? '#52525b' : '#a1a1aa'}
                             />
 
                             <Text style={tailwind('mt-3 text-center text-zinc-800 dark:text-zinc-400 text-lg')}>
@@ -123,8 +126,8 @@ const FavoriteListComponent = () => {
                             </Card>
                         </>
                     )}
-                </SafeAreaView>
-            </ScrollView>
+                </ScrollView>
+            </SafeAreaView>
         )
 }
 
