@@ -33,8 +33,8 @@ const AnimeListComponent = ({navigation}) => {
         setPage(1)
         let {
             data: {
-                Page: {media: retrievedAnime, pageInfo: {hasNextPage}},
                 // popular: {media: popularAnime},
+                Page: {media: retrievedAnime, pageInfo: {hasNextPage}},
                 season: {media: seasonalAnime, pageInfo: {hasNextPage: hasNextSeasonPage}},
             }
         } = await retrieveData(debounced, 1, 'ANIME')

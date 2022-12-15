@@ -7,13 +7,32 @@ import {handleError, handleResponse} from "./singleQuery";
 // }
 
 const query = `
-query {
-  trending: Page(page: 1, perPage: 6) {
+query($page: Int, $perPage: Int, $search: String) {
+  trending: Page(page: $page, perPage: $perPage) {
+    pageInfo {
+      total
+      currentPage
+      lastPage
+      hasNextPage
+      perPage
+    }
     media(sort: TRENDING_DESC, type: MANGA, isAdult: false) {
       ...media
     }
   }
-  popular: Page(page: 1, perPage: 6) {
+  Page (page: $page, perPage: $perPage) {
+    pageInfo {
+      total
+      currentPage
+      lastPage
+      hasNextPage
+      perPage
+    }
+    media (search: $search, type: MANGA) {
+      ...media
+    }
+  }
+  popular: Page(page: $page, perPage: $perPage) {
     pageInfo {
       total
       currentPage

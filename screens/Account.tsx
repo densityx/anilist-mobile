@@ -76,12 +76,12 @@ export default function Account({navigation}) {
 
                         <View style={tailwind('mt-3 w-full')}>
                             <Text style={tailwind('text-sm text-zinc-600 dark:text-zinc-500 font-medium')}>
-                                Anilist Auth Token
+                                AniList Auth Token
                             </Text>
 
                             <TextInput
                                 style={tailwind('mt-3 px-3 py-2 w-full rounded-md bg-white dark:bg-zinc-800 border-2 border-zinc-200 dark:border-zinc-700 text-zinc-900 dark:text-white')}
-                                placeholder={'Anilist Id'}
+                                placeholder={'AniList Id'}
                                 value={authToken}
                                 onChangeText={(text) => setAuthToken(text)}
                                 placeholderTextColor={theme === 'dark' ? '#a1a1aa' : '#27272a'}

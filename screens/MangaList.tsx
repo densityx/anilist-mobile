@@ -33,20 +33,23 @@ const MangaListComponent = ({navigation}) => {
         setPage(1)
         let {
             data: {
-                // Page: {media: retrievedManga, pageInfo: {hasNextPage}},
+                Page: {media: retrievedManga, pageInfo: {hasNextPage}},
                 // popular: {media: popularManga},
-                popular: {media: seasonalManga, pageInfo: {hasNextPage: hasNextSeasonPage}},
+                trending: {
+                    media: seasonalManga,
+                    pageInfo: {hasNextPage: hasNextTrending}
+                },
             }
         } = await retrieveData(debounced, 1, 'MANGA')
 
         console.log('seasonalManga manga: ', JSON.stringify(seasonalManga, null, 4));
 
         if (term.length) {
-            setMangas(seasonalManga);
+            setMangas(retrievedManga);
             setHasNextPage(hasNextPage);
         } else {
             setMangas(seasonalManga);
-            setHasNextPage(hasNextSeasonPage)
+            setHasNextPage(hasNextTrending)
         }
 
         setLoading(false);
@@ -55,22 +58,25 @@ const MangaListComponent = ({navigation}) => {
     const retrieveMangaOnPageChange = useCallback(async () => {
         let {
             data: {
-                // Page: {media: retrievedManga, pageInfo: {hasNextPage}},
-                trending: {media: seasonalManga, pageInfo: {hasNextPage: hasNextSeasonPage}},
+                Page: {media: retrievedManga, pageInfo: {hasNextPage}},
+                trending: {
+                    media: seasonalManga,
+                    pageInfo: {hasNextPage: hasNextTrending}
+                },
             }
         } = await retrieveData(debounced, page, 'MANGA')
 
         console.log('season', seasonalManga)
 
         if (term.length) {
-            setMangas([...mangas, ...seasonalManga]);
+            setMangas([...mangas, ...retrievedManga]);
             setHasNextPage(hasNextPage);
         } else {
             // setMangas(seasonalManga);
-            // setHasNextPage(hasNextSeasonPage)
+            // setHasNextPage(hasNextTrending)
 
             setMangas([...mangas, ...seasonalManga]);
-            setHasNextPage(hasNextSeasonPage);
+            setHasNextPage(hasNextTrending);
         }
     }, [page]);
 
