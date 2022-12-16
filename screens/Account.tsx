@@ -20,6 +20,7 @@ import {useUserStore} from "../store/zustand";
 import {updateProfile} from "../services/updateUserQuery";
 import Label from "../components/Common/Label";
 import Button from "../components/Common/Button";
+import {retrieveViewer} from "../services/retrieveViewer";
 
 export default function Account({navigation}) {
     const tailwind = useTailwind();
@@ -39,7 +40,9 @@ export default function Account({navigation}) {
         setLoading(true)
         let {data: {User}} = await retrieveData('dnstyx');
 
-        // console.log('user data', User);
+        let res = await retrieveViewer(userToken);
+        console.log('res', res);
+
         setUser(User);
         setAbout(User.about);
         setLoading(false);
@@ -91,7 +94,7 @@ export default function Account({navigation}) {
                                 placeholderTextColor={theme === 'dark' ? '#a1a1aa' : '#27272a'}
                             />
                         </View>
-                        
+
                         <Button
                             onPress={handleAuthenticate}
                             text={'Authenticate'}

@@ -113,7 +113,7 @@ export default function MangaShow({route}) {
                     <View style={tailwind('-mt-[80px] p-4')}>
                         <Card styles={'mt-3'}>
                             <Text style={tailwind('text-xl text-teal-500 font-semibold')}>
-                                {manga?.title?.romaji}
+                                {manga?.title?.userPreferred}
                             </Text>
 
                             <View style={tailwind('mt-3')}>

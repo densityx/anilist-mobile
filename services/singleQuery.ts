@@ -20,6 +20,7 @@ query ($id: Int, $type: MediaType) { # Define which variables will be used in th
     genres
     trending
     favourites
+    isFavourite
     volumes
     chapters
     trailer {
@@ -55,11 +56,12 @@ query ($id: Int, $type: MediaType) { # Define which variables will be used in th
 
 // Define the config we'll need for our Api request
 let url = 'https://graphql.anilist.co';
-let options = (id, type) => ({
+let options = (id, type, accessToken) => ({
     method: 'POST',
     headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
+        ...[!!accessToken ? {'Authorization': 'Bearer ' + accessToken} : null]
     },
     body: JSON.stringify({
         query: singleQuery,
@@ -81,9 +83,9 @@ export function handleError(error) {
     console.error(error);
 }
 
-export function retrieveData(mediaId, type) {
+export function retrieveData(mediaId, type, accessToken = '') {
     // Make the HTTP Api request
-    return fetch(url, options(mediaId, type))
+    return fetch(url, options(mediaId, type, accessToken))
         .then(handleResponse)
         .catch(handleError);
 }

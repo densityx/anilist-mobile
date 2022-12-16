@@ -1,4 +1,4 @@
-import {ActivityIndicator, FlatList, SafeAreaView, Text, TextInput, View} from "react-native";
+import {ActivityIndicator, FlatList, SafeAreaView, Text, View} from "react-native";
 import React, {useCallback, useEffect, useState} from "react";
 import {retrieveData} from "../services/paginatedQueryManga";
 import {useTailwind} from "tailwind-rn";
@@ -6,20 +6,17 @@ import MangaCard from "../components/Manga/MangaCard";
 import MangaShow from "./MangaShow";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useDebouncedValue} from "@mantine/hooks";
-import {IconSearch} from "tabler-icons-react-native";
 import LoadingScreen from "../components/Common/LoadingScreen";
 import Card from "../components/Common/Card";
-import {useUserStore} from "../store/zustand";
+import InputSearch from "../components/Common/InputSearch";
 
 const MangaListScreen = () => {
-    let theme = useUserStore(state => state.theme);
-
     const tailwind = useTailwind();
     const [term, setTerm] = useState('')
     const [debounced] = useDebouncedValue(term, 500);
 
     const [loading, setLoading] = useState(true);
-    const [mangas, setMangas] = useState([]);
+    const [allManga, setMangas] = useState([]);
     const [page, setPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(false)
 
@@ -35,8 +32,6 @@ const MangaListScreen = () => {
                 },
             }
         } = await retrieveData(debounced, 1, 'MANGA')
-
-        console.log('seasonalManga manga: ', JSON.stringify(seasonalManga, null, 4));
 
         if (term.length) {
             setMangas(retrievedManga);
@@ -60,13 +55,11 @@ const MangaListScreen = () => {
             }
         } = await retrieveData(debounced, page, 'MANGA')
 
-        console.log('season', seasonalManga)
-
         if (term.length) {
-            setMangas([...mangas, ...retrievedManga]);
+            setMangas([...allManga, ...retrievedManga]);
             setHasNextPage(hasNextPage);
         } else {
-            setMangas([...mangas, ...seasonalManga]);
+            setMangas([...allManga, ...seasonalManga]);
             setHasNextPage(hasNextTrending);
         }
     }, [page]);
@@ -84,28 +77,18 @@ const MangaListScreen = () => {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <View style={tailwind('relative flex justify-center p-4')}>
-                <TextInput
-                    style={tailwind('pl-8 pr-4 py-2 w-full rounded-md bg-white dark:bg-zinc-800 border-transparent text-zinc-900 dark:text-white')}
-                    placeholder={'Search manga...'}
-                    value={term}
-                    onChangeText={(text) => setTerm(text)}
-                    placeholderTextColor={theme === 'dark' ? '#a1a1aa' : '#27272a'}
-                />
-
-                <IconSearch
-                    color={theme === 'dark' ? '#52525b' : '#a1a1aa'}
-                    style={tailwind('absolute ml-6')}
-                    size={16}
-                />
-            </View>
+            <InputSearch
+                term={term}
+                onChangeText={(text) => setTerm(text)}
+                placeholder={'Search manga...'}
+            />
 
             {loading
                 ? <LoadingScreen/>
                 : (
                     <FlatList
                         contentContainerStyle={{flexGrow: 1}}
-                        data={mangas}
+                        data={allManga}
                         renderItem={({item}) => <MangaCard manga={item}/>}
                         keyExtractor={(manga, index) => index.toString()}
                         numColumns={2}

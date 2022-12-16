@@ -15,7 +15,7 @@ import Label from '../components/Common/Label';
 import Button from '../components/Common/Button';
 import {useNavigation} from "@react-navigation/native";
 
-const FavoriteListComponent = () => {
+const FavoriteListScreen = () => {
     const tailwind = useTailwind();
     const [loading, setLoading] = useState(false);
     const [favoriteAnime, setFavoriteAnime] = useState([]);
@@ -124,10 +124,10 @@ export default function Favorites() {
     const FavoriteStack = createNativeStackNavigator();
 
     return (
-        <FavoriteStack.Navigator initialRouteName={'FavoriteListComponent'}>
+        <FavoriteStack.Navigator initialRouteName={'FavoriteListScreen'}>
             <FavoriteStack.Screen
-                name={'FavoriteListComponent'}
-                component={FavoriteListComponent}
+                name={'FavoriteListScreen'}
+                component={FavoriteListScreen}
                 options={{title: 'Favorites'}}
             />
             <FavoriteStack.Screen

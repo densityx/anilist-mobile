@@ -1,4 +1,4 @@
-import {ActivityIndicator, FlatList, SafeAreaView, Text, TextInput, View} from "react-native";
+import {ActivityIndicator, FlatList, SafeAreaView, Text, View} from "react-native";
 import React, {useCallback, useEffect, useState} from "react";
 import {retrieveData} from "../services/paginatedQuery";
 import {useTailwind} from "tailwind-rn";
@@ -6,20 +6,17 @@ import AnimeCard from "../components/Anime/AnimeCard";
 import AnimeShow from "./AnimeShow";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import {useDebouncedValue} from "@mantine/hooks";
-import {IconSearch} from "tabler-icons-react-native";
 import LoadingScreen from "../components/Common/LoadingScreen";
 import Card from "../components/Common/Card";
-import {useUserStore} from "../store/zustand";
+import InputSearch from "../components/Common/InputSearch";
 
 const AnimeListComponent = () => {
-    let theme = useUserStore(state => state.theme)
-
     const tailwind = useTailwind();
     const [term, setTerm] = useState('')
     const [debounced] = useDebouncedValue(term, 500);
 
     const [loading, setLoading] = useState(true);
-    const [animes, setAnimes] = useState([]);
+    const [allAnime, setAnimes] = useState([]);
     const [page, setPage] = useState(1);
     const [hasNextPage, setHasNextPage] = useState(false)
 
@@ -53,10 +50,10 @@ const AnimeListComponent = () => {
         } = await retrieveData(debounced, page, 'ANIME')
 
         if (term.length) {
-            setAnimes([...animes, ...retrievedAnime]);
+            setAnimes([...allAnime, ...retrievedAnime]);
             setHasNextPage(hasNextPage);
         } else {
-            setAnimes([...animes, ...seasonalAnime]);
+            setAnimes([...allAnime, ...seasonalAnime]);
             setHasNextPage(hasNextSeasonPage);
         }
     }, [page]);
@@ -74,28 +71,18 @@ const AnimeListComponent = () => {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <View style={tailwind('relative flex justify-center p-4')}>
-                <TextInput
-                    style={tailwind('pl-8 pr-4 py-2 w-full rounded-md bg-white dark:bg-zinc-800 border-transparent text-zinc-900 dark:text-white')}
-                    placeholder={'Search anime...'}
-                    value={term}
-                    onChangeText={(text) => setTerm(text)}
-                    placeholderTextColor={theme === 'dark' ? '#a1a1aa' : '#27272a'}
-                />
-
-                <IconSearch
-                    color={theme === 'dark' ? '#52525b' : '#a1a1aa'}
-                    style={tailwind('absolute ml-6')}
-                    size={16}
-                />
-            </View>
+            <InputSearch
+                term={term}
+                onChangeText={(text) => setTerm(text)}
+                placeholder={'Search anime...'}
+            />
 
             {loading
                 ? <LoadingScreen/>
                 : (
                     <FlatList
                         contentContainerStyle={{flexGrow: 1}}
-                        data={animes}
+                        data={allAnime}
                         renderItem={({item}) => <AnimeCard anime={item}/>}
                         keyExtractor={(anime, index) => index.toString()}
                         numColumns={2}

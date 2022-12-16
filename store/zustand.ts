@@ -2,15 +2,6 @@ import create from 'zustand';
 import {devtools, persist} from 'zustand/middleware'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const useBearStore = create(persist((set) => ({
-    bears: 0,
-    increasePopulation: () => set((state) => ({bears: state.bears + 1})),
-    removeAllBears: () => set({bears: 0})
-}), {
-    name: 'bear-storage',
-    getStorage: () => AsyncStorage,
-}));
-
 const useUserStore = create(devtools(persist(((set) => ({
     theme: 'dark',
     token: null,
@@ -24,4 +15,4 @@ const useUserStore = create(devtools(persist(((set) => ({
     getStorage: () => AsyncStorage
 })));
 
-export {useBearStore, useUserStore};
+export {useUserStore};

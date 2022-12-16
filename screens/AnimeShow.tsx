@@ -12,7 +12,6 @@ import {
 import {retrieveData} from "../services/singleQuery";
 import {useTailwind} from "tailwind-rn";
 import {LinearGradient} from "expo-linear-gradient";
-import {useNavigation} from "@react-navigation/native";
 import Svg, {Path} from "react-native-svg";
 import Card from "../components/Common/Card";
 import RenderHtml from 'react-native-render-html';
@@ -22,19 +21,21 @@ import Tag from "../components/Common/Tag";
 import OtherAdaptationCard from "../components/Common/OtherAdaptationCard";
 import DataDetail from "../components/Common/DataDetail";
 import Label from "../components/Common/Label";
+import {useUserStore} from "../store/zustand";
 
 export default function AnimeShow({route}) {
     const tailwind = useTailwind();
     const {animeId} = route.params;
-    const navigation = useNavigation();
     const [anime, setAnime] = useState({});
     const [loading, setLoading] = useState(true);
     const {width} = useWindowDimensions();
     const [descriptionExpand, setDescriptionExpand] = useState(false);
+    const userToken = useUserStore(state => state.token);
+    console.log('userToken', userToken);
 
     let getData = useCallback(async () => {
         setLoading(true);
-        let {data: {Media}} = await retrieveData(animeId, 'ANIME');
+        let {data: {Media}} = await retrieveData(animeId, 'ANIME', userToken);
         setAnime(Media);
         setLoading(false);
     }, []);
@@ -117,7 +118,7 @@ export default function AnimeShow({route}) {
                     <View style={tailwind('-mt-[80px] p-4')}>
                         <Card styles={'mt-3'}>
                             <Text style={tailwind('text-xl text-teal-500 font-semibold')}>
-                                {anime?.title?.romaji}
+                                {anime?.title?.userPreferred} ({anime?.isFavourite})
                             </Text>
 
                             <View style={tailwind('mt-3')}>
