@@ -26,10 +26,12 @@ yarn install # or npm install
 To run the project you can run the command below
 
 ```bash
-yarn start # or npm sstart
-yarn android # or npm android
-yarn ios # or npm ios
+yarn start # or npm run start
+yarn android # or npm run android
+yarn ios # or npm run ios
 ```
+
+It's recommended to use actual device (using Expo Go) and scan the generated QR Code / enter the expo link
 
 ## Dependencies
 
