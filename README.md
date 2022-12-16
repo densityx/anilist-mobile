@@ -45,16 +45,18 @@ Below are the main project dependencies
 
 ## Screenshots
 
-<img src="/assets/images/1.jpg">
-<img src="/assets/images/2.jpg">
-<img src="/assets/images/3.jpg">
-<img src="/assets/images/4.jpg">
-<img src="/assets/images/5.jpg">
-<img src="/assets/images/6.jpg">
-<img src="/assets/images/7.jpg">
-<img src="/assets/images/8.jpg">
-<img src="/assets/images/9.jpg">
-<img src="/assets/images/10.jpg">
-<img src="/assets/images/11.jpg">
-<img src="/assets/images/12.jpg">
-<img src="/assets/images/13.jpg">
+<div style="display: flex;">
+<img style="width: 48%" src="/assets/images/1.jpg">
+<img style="width: 48%" src="/assets/images/2.jpg">
+<img style="width: 48%" src="/assets/images/3.jpg">
+<img style="width: 48%" src="/assets/images/4.jpg">
+<img style="width: 48%" src="/assets/images/5.jpg">
+<img style="width: 48%" src="/assets/images/6.jpg">
+<img style="width: 48%" src="/assets/images/7.jpg">
+<img style="width: 48%" src="/assets/images/8.jpg">
+<img style="width: 48%" src="/assets/images/9.jpg">
+<img style="width: 48%" src="/assets/images/10.jpg">
+<img style="width: 48%" src="/assets/images/11.jpg">
+<img style="width: 48%" src="/assets/images/12.jpg">
+<img style="width: 48%" src="/assets/images/13.jpg">
+</div>
