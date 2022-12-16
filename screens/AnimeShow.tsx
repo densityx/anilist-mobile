@@ -1,19 +1,9 @@
 import React, {useCallback, useEffect, useState} from "react";
-import {
-    Image,
-    Pressable,
-    RefreshControl,
-    SafeAreaView,
-    ScrollView,
-    Text,
-    useWindowDimensions,
-    View
-} from "react-native";
+import {Image, Pressable, RefreshControl, SafeAreaView, ScrollView, Text, View} from "react-native";
 import {retrieveData} from "../services/singleQuery";
 import {useTailwind} from "tailwind-rn";
 import {LinearGradient} from "expo-linear-gradient";
 import Card from "../components/Common/Card";
-import RenderHtml from 'react-native-render-html';
 import LoadingScreen from "../components/Common/LoadingScreen";
 import AnimeTrailer from "../components/Anime/AnimeTrailer";
 import Tag from "../components/Common/Tag";
@@ -23,14 +13,13 @@ import Label from "../components/Common/Label";
 import {useUserStore} from "../store/zustand";
 import {retrieveUserQuery} from "../services/retrieveUserQuery";
 import {IconHeart, IconStar} from "tabler-icons-react-native";
+import DataDescription from "../components/Common/DataDescription";
 
 export default function AnimeShow({route}) {
     const tailwind = useTailwind();
     const {animeId} = route.params;
     const [anime, setAnime] = useState({});
     const [loading, setLoading] = useState(true);
-    const {width} = useWindowDimensions();
-    const [descriptionExpand, setDescriptionExpand] = useState(false);
     const userToken = useUserStore(state => state.token);
     const [userDetails, setUserDetails] = useState({});
 
@@ -131,32 +120,7 @@ export default function AnimeShow({route}) {
                                 </ScrollView>
                             </View>
 
-                            {!!anime?.description && (
-                                <View
-                                    style={tailwind(`relative flex mt-4 mb-4 text-white ${descriptionExpand ? 'h-auto' : 'h-[60px]'}`)}
-                                >
-                                    <RenderHtml
-                                        contentWidth={width}
-                                        source={{html: anime?.description}}
-                                        tagsStyles={{
-                                            body: {
-                                                color: '#a1a1aa',
-                                            }
-                                        }}
-                                    />
-
-                                    {!descriptionExpand && (
-                                        <Pressable
-                                            style={tailwind('flex mt-2')}
-                                            onPress={() => setDescriptionExpand(true)}
-                                        >
-                                            <Text style={tailwind('text-zinc-800 dark:text-white')}>
-                                                More...
-                                            </Text>
-                                        </Pressable>
-                                    )}
-                                </View>
-                            )}
+                            <DataDescription media={anime}/>
 
                             {!loading && <AnimeTrailer anime={anime}/>}
 

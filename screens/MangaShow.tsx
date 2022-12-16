@@ -13,7 +13,6 @@ import {retrieveData} from "../services/singleQuery";
 import {useTailwind} from "tailwind-rn";
 import {LinearGradient} from "expo-linear-gradient";
 import Card from "../components/Common/Card";
-import RenderHtml from 'react-native-render-html';
 import LoadingScreen from "../components/Common/LoadingScreen";
 import Tag from "../components/Common/Tag";
 import OtherAdaptationCard from "../components/Common/OtherAdaptationCard";
@@ -22,6 +21,7 @@ import Label from "../components/Common/Label";
 import {IconHeart, IconStar} from "tabler-icons-react-native";
 import {retrieveUserQuery} from "../services/retrieveUserQuery";
 import {useUserStore} from "../store/zustand";
+import DataDescription from "../components/Common/DataDescription";
 
 export default function MangaShow({route}) {
     const tailwind = useTailwind();
@@ -130,32 +130,7 @@ export default function MangaShow({route}) {
                                 </ScrollView>
                             </View>
 
-                            {!!manga?.description && (
-                                <View
-                                    style={tailwind(`relative flex mt-4 mb-4 text-white ${descriptionExpand ? 'h-auto' : 'h-[60px]'}`)}
-                                >
-                                    <RenderHtml
-                                        contentWidth={width}
-                                        source={{html: manga?.description}}
-                                        tagsStyles={{
-                                            body: {
-                                                color: '#a1a1aa',
-                                            }
-                                        }}
-                                    />
-
-                                    {!descriptionExpand && (
-                                        <Pressable
-                                            style={tailwind('flex mt-2')}
-                                            onPress={() => setDescriptionExpand(true)}
-                                        >
-                                            <Text style={tailwind('text-zinc-800 dark:text-white')}>
-                                                More...
-                                            </Text>
-                                        </Pressable>
-                                    )}
-                                </View>
-                            )}
+                            <DataDescription media={manga}/>
 
                             <View style={tailwind('flex flex-row flex-wrap mt-4')}>
                                 <DataDetail
