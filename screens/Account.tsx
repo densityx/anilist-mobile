@@ -20,7 +20,6 @@ import {useUserStore} from "../store/zustand";
 import {updateProfile} from "../services/updateUserQuery";
 import Label from "../components/Common/Label";
 import Button from "../components/Common/Button";
-import {retrieveViewer} from "../services/retrieveViewer";
 
 export default function Account({navigation}) {
     const tailwind = useTailwind();
@@ -40,8 +39,8 @@ export default function Account({navigation}) {
         setLoading(true)
         let {data: {User}} = await retrieveData('dnstyx');
 
-        let res = await retrieveViewer(userToken);
-        console.log('res', res);
+        // let res = await retrieveViewer(userToken);
+        // console.log('res', res);
 
         setUser(User);
         setAbout(User.about);

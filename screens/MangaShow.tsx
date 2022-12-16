@@ -12,7 +12,6 @@ import {
 import {retrieveData} from "../services/singleQuery";
 import {useTailwind} from "tailwind-rn";
 import {LinearGradient} from "expo-linear-gradient";
-import Svg, {Path} from "react-native-svg";
 import Card from "../components/Common/Card";
 import RenderHtml from 'react-native-render-html';
 import LoadingScreen from "../components/Common/LoadingScreen";
@@ -20,19 +19,27 @@ import Tag from "../components/Common/Tag";
 import OtherAdaptationCard from "../components/Common/OtherAdaptationCard";
 import DataDetail from "../components/Common/DataDetail";
 import Label from "../components/Common/Label";
+import {IconHeart, IconStar} from "tabler-icons-react-native";
+import {retrieveUserQuery} from "../services/retrieveUserQuery";
+import {useUserStore} from "../store/zustand";
 
 export default function MangaShow({route}) {
     const tailwind = useTailwind();
     const {mangaId} = route.params;
-    const [manga, setAnime] = useState({});
+    const [manga, setManga] = useState({});
     const [loading, setLoading] = useState(true);
     const {width} = useWindowDimensions();
     const [descriptionExpand, setDescriptionExpand] = useState(false);
+    const userToken = useUserStore(state => state.token);
+    const [userDetails, setUserDetails] = useState({});
 
     let getData = useCallback(async () => {
         let {data: {Media}} = await retrieveData(mangaId, 'MANGA');
 
-        setAnime(Media);
+        setManga(Media);
+
+        let {data} = await retrieveUserQuery(userToken);
+        setUserDetails(data);
     }, []);
 
     useEffect(() => {
@@ -64,46 +71,37 @@ export default function MangaShow({route}) {
                             style={tailwind('absolute top-0 right-0 left-0 h-full')}
                         />
 
-                        <Image
-                            source={{
-                                uri: manga?.coverImage?.large
-                            }}
-                            style={tailwind('absolute top-0 mt-[60px] h-[160px] w-[120px] rounded-lg overflow-hidden')}
-                        />
+                        <View style={tailwind('absolute flex items-center top-0 mt-[60px]')}>
+                            <Image
+                                source={{
+                                    uri: manga?.coverImage?.large
+                                }}
+                                style={tailwind('h-[160px] w-[120px] rounded-lg overflow-hidden')}
+                            />
+
+                            <View
+                                style={tailwind('absolute bottom-0 mb-1 flex flex-row items-center p-1 rounded-xl bg-yellow-900/50')}
+                            >
+                                <IconStar color={'#facc15'} size={16}/>
+
+                                <Text style={tailwind('ml-1 text-yellow-400 font-semibold')}>
+                                    {manga.trending}
+                                </Text>
+                            </View>
+                        </View>
 
                         <View style={tailwind('flex flex-row absolute top-0 right-0 mt-4 mr-4')}>
                             <Pressable
                                 onPress={() => {
                                 }}
-                                style={tailwind('flex flex-row items-center mr-2 p-2 rounded-xl bg-zinc-900/50')}
+                                style={tailwind(`flex flex-row items-center p-2 rounded-xl ${userDetails.Viewer.favourites.manga.nodes.find(a => a.id === manga.id) ? 'bg-pink-900/50' : 'bg-white/50'}`)}
                             >
-                                <Svg style={tailwind('w-5 h-5 text-yellow-400')} viewBox="0 0 24 24" strokeWidth="2"
-                                     stroke="currentColor"
-                                     fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                    <Path stroke="none" d="M0 0h24v24H0z" fill="none"></Path>
-                                    <Path
-                                        d="M12 17.75l-6.172 3.245l1.179 -6.873l-5 -4.867l6.9 -1l3.086 -6.253l3.086 6.253l6.9 1l-5 4.867l1.179 6.873z"></Path>
-                                </Svg>
+                                <IconHeart
+                                    color={userDetails.Viewer.favourites.manga.nodes.find(a => a.id === manga.id) ? '#f472b6' : '#fff'}
+                                    size={16}/>
 
-                                <Text style={tailwind('ml-2 text-yellow-400 font-semibold')}>
-                                    {manga.trending}
-                                </Text>
-                            </Pressable>
-
-                            <Pressable
-                                onPress={() => {
-                                }}
-                                style={tailwind('flex flex-row items-center p-2 rounded-xl bg-zinc-900/50')}
-                            >
-                                <Svg style={tailwind('w-5 h-5 text-pink-400')} viewBox="0 0 24 24" strokeWidth="2"
-                                     stroke="currentColor"
-                                     fill="none" strokeLinecap="round" strokeLinejoin="round">
-                                    <Path stroke="none" d="M0 0h24v24H0z" fill="none"/>
-                                    <Path
-                                        d="M19.5 12.572l-7.5 7.428l-7.5 -7.428m0 0a5 5 0 1 1 7.5 -6.566a5 5 0 1 1 7.5 6.572"/>
-                                </Svg>
-
-                                <Text style={tailwind('ml-2 text-pink-400 font-semibold')}>
+                                <Text
+                                    style={tailwind(`ml-2 font-semibold ${userDetails.Viewer.favourites.manga.nodes.find(a => a.id === manga.id) ? 'text-pink-400' : 'text-white'}`)}>
                                     {manga.favourites}
                                 </Text>
                             </Pressable>

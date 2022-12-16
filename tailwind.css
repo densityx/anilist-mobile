@@ -78,6 +78,14 @@
   margin-bottom: 0.25rem
 }
 
+.mt-1 {
+  margin-top: 0.25rem
+}
+
+.ml-1 {
+  margin-left: 0.25rem
+}
+
 .inline {
   display: inline
 }
@@ -282,6 +290,40 @@
   background-color: rgb(24 24 27 / 0.5)
 }
 
+.bg-pink-400 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(244 114 182 / var(--tw-bg-opacity))
+}
+
+.bg-zinc-900 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(24 24 27 / var(--tw-bg-opacity))
+}
+
+.bg-yellow-900\/50 {
+  background-color: rgb(113 63 18 / 0.5)
+}
+
+.bg-pink-900\/50 {
+  background-color: rgb(131 24 67 / 0.5)
+}
+
+.bg-pink-200\/50 {
+  background-color: rgb(251 207 232 / 0.5)
+}
+
+.bg-zinc-400\/20 {
+  background-color: rgb(161 161 170 / 0.2)
+}
+
+.bg-zinc-400\/50 {
+  background-color: rgb(161 161 170 / 0.5)
+}
+
+.bg-white\/50 {
+  background-color: rgb(255 255 255 / 0.5)
+}
+
 .p-4 {
   padding: 1rem
 }
@@ -292,6 +334,10 @@
 
 .p-3 {
   padding: 0.75rem
+}
+
+.p-1 {
+  padding: 0.25rem
 }
 
 .px-2 {
