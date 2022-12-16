@@ -39,8 +39,10 @@ export default function AnimeShow({route}) {
         let {data: {Media}} = await retrieveData(animeId, 'ANIME', userToken);
         setAnime(Media);
 
-        let {data} = await retrieveUserQuery(userToken);
-        setUserDetails(data);
+        if (userToken) {
+            let {data} = await retrieveUserQuery(userToken);
+            setUserDetails(data);
+        }
 
         setLoading(false);
     }, []);
@@ -97,14 +99,14 @@ export default function AnimeShow({route}) {
                             <Pressable
                                 onPress={() => {
                                 }}
-                                style={tailwind(`flex flex-row items-center p-2 rounded-xl ${userDetails.Viewer.favourites.anime.nodes.find(a => a.id === anime.id) ? 'bg-pink-900/50' : 'bg-white/50'}`)}
+                                style={tailwind(`flex flex-row items-center p-2 rounded-xl ${userToken && userDetails.Viewer.favourites.anime.nodes.find(a => a.id === anime.id) ? 'bg-pink-900/50' : 'bg-white/50'}`)}
                             >
                                 <IconHeart
-                                    color={userDetails.Viewer.favourites.anime.nodes.find(a => a.id === anime.id) ? '#f472b6' : '#fff'}
+                                    color={userToken && userDetails.Viewer.favourites.anime.nodes.find(a => a.id === anime.id) ? '#f472b6' : '#fff'}
                                     size={16}/>
 
                                 <Text
-                                    style={tailwind(`ml-2 font-semibold ${userDetails.Viewer.favourites.anime.nodes.find(a => a.id === anime.id) ? 'text-pink-400' : 'text-white'}`)}>
+                                    style={tailwind(`ml-2 font-semibold ${userToken && userDetails.Viewer.favourites.anime.nodes.find(a => a.id === anime.id) ? 'text-pink-400' : 'text-white'}`)}>
                                     {anime.favourites}
                                 </Text>
                             </Pressable>

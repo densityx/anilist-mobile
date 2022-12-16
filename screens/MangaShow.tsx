@@ -34,12 +34,16 @@ export default function MangaShow({route}) {
     const [userDetails, setUserDetails] = useState({});
 
     let getData = useCallback(async () => {
+        setLoading(true);
         let {data: {Media}} = await retrieveData(mangaId, 'MANGA');
 
         setManga(Media);
 
-        let {data} = await retrieveUserQuery(userToken);
-        setUserDetails(data);
+        if (userToken) {
+            let {data} = await retrieveUserQuery(userToken);
+            setUserDetails(data);
+        }
+        setLoading(false);
     }, []);
 
     useEffect(() => {
@@ -94,14 +98,14 @@ export default function MangaShow({route}) {
                             <Pressable
                                 onPress={() => {
                                 }}
-                                style={tailwind(`flex flex-row items-center p-2 rounded-xl ${userDetails.Viewer.favourites.manga.nodes.find(a => a.id === manga.id) ? 'bg-pink-900/50' : 'bg-white/50'}`)}
+                                style={tailwind(`flex flex-row items-center p-2 rounded-xl ${userToken && userDetails.Viewer.favourites.manga.nodes.find(a => a.id === manga.id) ? 'bg-pink-900/50' : 'bg-white/50'}`)}
                             >
                                 <IconHeart
-                                    color={userDetails.Viewer.favourites.manga.nodes.find(a => a.id === manga.id) ? '#f472b6' : '#fff'}
+                                    color={userToken && userDetails.Viewer.favourites.manga.nodes.find(a => a.id === manga.id) ? '#f472b6' : '#fff'}
                                     size={16}/>
 
                                 <Text
-                                    style={tailwind(`ml-2 font-semibold ${userDetails.Viewer.favourites.manga.nodes.find(a => a.id === manga.id) ? 'text-pink-400' : 'text-white'}`)}>
+                                    style={tailwind(`ml-2 font-semibold ${userToken && userDetails.Viewer.favourites.manga.nodes.find(a => a.id === manga.id) ? 'text-pink-400' : 'text-white'}`)}>
                                     {manga.favourites}
                                 </Text>
                             </Pressable>
