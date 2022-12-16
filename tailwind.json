@@ -464,6 +464,12 @@
 			"backgroundColor": "rgb(63 63 70 / var(--tw-bg-opacity))"
 		}
 	},
+	"bg-zinc-100": {
+		"style": {
+			"--tw-bg-opacity": 1,
+			"backgroundColor": "rgb(244 244 245 / var(--tw-bg-opacity))"
+		}
+	},
 	"p-4": {
 		"style": {
 			"paddingTop": 16,
