@@ -175,7 +175,7 @@ export default function Account({navigation}) {
                                         Edit User Details
                                     </Text>
 
-                                    <Label>
+                                    <Label style={'mt-3'}>
                                         About
                                     </Label>
 

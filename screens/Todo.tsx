@@ -4,35 +4,26 @@ import Animated, {Layout, LightSpeedInLeft, LightSpeedOutRight} from 'react-nati
 import {useTailwind} from "tailwind-rn";
 import Button from '../components/Common/Button';
 import InputSearch from "../components/Common/InputSearch";
+import Card from "../components/Common/Card";
 
 interface EventTodo {
     name: string;
     id: string;
 }
 
-const styles = {
-    participantView: {
-        borderBottomColor: 'black',
-        width: '100%',
-        borderBottomWidth: 1,
-        padding: 10,
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        backgroundColor: '#fffbeb',
-    }
-}
-
 function TodoItem({name, onRemove,}: { name: string; onRemove: () => void; }): React.ReactElement {
+    const tailwind = useTailwind();
+
     return (
         <Animated.View
             entering={LightSpeedInLeft}
             exiting={LightSpeedOutRight}
             layout={Layout.springify()}
-            style={useTailwind()('flex flex-row items-center justify-between p-3 bg-orange-50 border-b border-orange-400')}
+            style={tailwind('flex flex-row items-center justify-between mb-1 p-3 bg-orange-50 dark:bg-zinc-800 border-b border-orange-400 dark:border-zinc-700 rounded-xl')}
         >
-            <Text>{name}</Text>
+            <Text style={tailwind('dark:text-zinc-400')}>
+                {name}
+            </Text>
 
             <Button
                 text="Remove"
@@ -76,11 +67,11 @@ export default function TodoScreen(): React.ReactElement {
                         />
                     ))
                 ) : (
-                    <View style={tailwind('w-full bg-white p-4 rounded-lg')}>
-                        <Text style={tailwind('text-center')}>
+                    <Card style={tailwind('w-full bg-white p-4 rounded-lg')}>
+                        <Text style={tailwind('dark:text-zinc-400 text-center')}>
                             There are currently no anime to watch
                         </Text>
-                    </View>
+                    </Card>
                 )}
             </ScrollView>
 

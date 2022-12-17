@@ -102,6 +102,10 @@
   margin-bottom: 2rem
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem
+}
+
 .inline {
   display: inline
 }
@@ -635,6 +639,16 @@
     border-color: rgb(63 63 70 / var(--tw-border-opacity))
   }
 
+  .dark\:border-zinc-200 {
+    --tw-border-opacity: 1;
+    border-color: rgb(228 228 231 / var(--tw-border-opacity))
+  }
+
+  .dark\:border-zinc-800 {
+    --tw-border-opacity: 1;
+    border-color: rgb(39 39 42 / var(--tw-border-opacity))
+  }
+
   .dark\:bg-zinc-700 {
     --tw-bg-opacity: 1;
     background-color: rgb(63 63 70 / var(--tw-bg-opacity))
@@ -648,6 +662,11 @@
   .dark\:bg-zinc-900 {
     --tw-bg-opacity: 1;
     background-color: rgb(24 24 27 / var(--tw-bg-opacity))
+  }
+
+  .dark\:bg-orange-900 {
+    --tw-bg-opacity: 1;
+    background-color: rgb(124 45 18 / var(--tw-bg-opacity))
   }
 
   .dark\:text-teal-500 {
