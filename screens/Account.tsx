@@ -167,6 +167,7 @@ export default function Account({navigation}) {
                             </View>
                         </Card>
 
+
                         {editMode && (
                             <Card styles={'mt-4'}>
                                 <View style={tailwind('w-full')}>

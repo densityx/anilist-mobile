@@ -7,10 +7,18 @@ import Account from "./screens/Account";
 import {createBottomTabNavigator} from "@react-navigation/bottom-tabs";
 import Welcome from "./screens/Welcome";
 import Favorites from "./screens/Favorites";
-import {IconArtboard, IconBraces, IconHeart, IconLayoutList, IconUserCircle} from 'tabler-icons-react-native';
+import {
+    IconArtboard,
+    IconBookmark,
+    IconBraces,
+    IconHeart,
+    IconLayoutList,
+    IconUserCircle
+} from 'tabler-icons-react-native';
 import MangaList from "./screens/MangaList";
 import LogoutButton from "./components/Common/LogoutButton";
 import {useUserStore} from "./store/zustand";
+import TodoScreen from "./screens/Todo";
 
 const MyThemeLight = {
     ...DefaultTheme,
@@ -63,6 +71,10 @@ const App = () => {
                             if (route.name === 'Account') {
                                 return <IconUserCircle color={color} size={size}/>;
                             }
+
+                            if (route.name === 'Anime Todo') {
+                                return <IconBookmark color={color} size={size}/>
+                            }
                         },
                         tabBarActiveTintColor: 'teal',
                         tabBarInactiveTintColor: 'gray'
@@ -87,6 +99,10 @@ const App = () => {
                         name={'Favorites'}
                         component={Favorites}
                         options={{headerShown: false}}
+                    />
+                    <Tab.Screen
+                        name={'Anime Todo'}
+                        component={TodoScreen}
                     />
                     <Tab.Screen
                         name={'Account'}

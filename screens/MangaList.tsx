@@ -77,11 +77,13 @@ const MangaListScreen = () => {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <InputSearch
-                term={term}
-                onChangeText={(text) => setTerm(text)}
-                placeholder={'Search manga...'}
-            />
+            <View style={tailwind('p-4')}>
+                <InputSearch
+                    term={term}
+                    onChangeText={(text) => setTerm(text)}
+                    placeholder={'Search manga...'}
+                />
+            </View>
 
             {loading
                 ? <LoadingScreen/>

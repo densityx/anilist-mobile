@@ -4,12 +4,12 @@ import React from "react";
 import {useTailwind} from "tailwind-rn";
 import {useUserStore} from "../../store/zustand";
 
-export default function InputSearch({term, onChangeText, placeholder}) {
+export default function InputSearch({term, onChangeText, placeholder, styles = ''}) {
     const tailwind = useTailwind();
     const theme = useUserStore(state => state.theme);
 
     return (
-        <View style={tailwind('relative flex justify-center p-4')}>
+        <View style={tailwind(`relative flex justify-center w-full ${styles}`)}>
             <TextInput
                 style={tailwind('pl-8 pr-4 py-2 w-full rounded-md bg-white dark:bg-zinc-800 border-transparent text-zinc-900 dark:text-white')}
                 placeholder={placeholder}
@@ -20,7 +20,7 @@ export default function InputSearch({term, onChangeText, placeholder}) {
 
             <IconSearch
                 color={theme === 'dark' ? '#52525b' : '#a1a1aa'}
-                style={tailwind('absolute ml-6')}
+                style={tailwind('absolute ml-2')}
                 size={16}
             />
         </View>

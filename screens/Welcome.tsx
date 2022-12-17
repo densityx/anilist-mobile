@@ -11,7 +11,8 @@ const DEPENDENCIES: string[] = [
     'TypeScript',
     'Tailwind CSS',
     'AsyncStorage',
-    'WebView / YouTube'
+    'WebView / YouTube',
+    'Reanimated'
 ];
 
 const TOOLS: string[] = [

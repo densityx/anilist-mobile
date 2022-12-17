@@ -71,11 +71,13 @@ const AnimeListComponent = () => {
 
     return (
         <SafeAreaView style={{flex: 1}}>
-            <InputSearch
-                term={term}
-                onChangeText={(text) => setTerm(text)}
-                placeholder={'Search anime...'}
-            />
+            <View style={tailwind('p-4')}>
+                <InputSearch
+                    term={term}
+                    onChangeText={(text) => setTerm(text)}
+                    placeholder={'Search anime...'}
+                />
+            </View>
 
             {loading
                 ? <LoadingScreen/>

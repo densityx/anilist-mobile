@@ -26,6 +26,10 @@
   margin: 1rem
 }
 
+.m-0 {
+  margin: 0px
+}
+
 .mt-4 {
   margin-top: 1rem
 }
@@ -84,6 +88,18 @@
 
 .ml-1 {
   margin-left: 0.25rem
+}
+
+.ml-4 {
+  margin-left: 1rem
+}
+
+.mb-10 {
+  margin-bottom: 2.5rem
+}
+
+.mb-8 {
+  margin-bottom: 2rem
 }
 
 .inline {
@@ -150,6 +166,10 @@
   height: 54px
 }
 
+.h-\[32px\] {
+  height: 32px
+}
+
 .w-1\/2 {
   width: 50%
 }
@@ -190,6 +210,34 @@
   width: 91.666667%
 }
 
+.w-2\/12 {
+  width: 16.666667%
+}
+
+.w-8\/12 {
+  width: 66.666667%
+}
+
+.w-4\/12 {
+  width: 33.333333%
+}
+
+.w-9\/12 {
+  width: 75%
+}
+
+.w-3\/12 {
+  width: 25%
+}
+
+.w-1\/6 {
+  width: 16.666667%
+}
+
+.w-1\/5 {
+  width: 20%
+}
+
 .flex-row {
   flex-direction: row
 }
@@ -208,6 +256,10 @@
 
 .items-center {
   align-items: center
+}
+
+.items-stretch {
+  align-items: stretch
 }
 
 .justify-end {
@@ -250,6 +302,14 @@
   border-width: 2px
 }
 
+.border-b-2 {
+  border-bottom-width: 2px
+}
+
+.border-b {
+  border-bottom-width: 1px
+}
+
 .border-rose-500 {
   --tw-border-opacity: 1;
   border-color: rgb(244 63 94 / var(--tw-border-opacity))
@@ -267,6 +327,31 @@
 
 .border-transparent {
   border-color: transparent
+}
+
+.border-yellow-100 {
+  --tw-border-opacity: 1;
+  border-color: rgb(254 249 195 / var(--tw-border-opacity))
+}
+
+.border-yellow-200 {
+  --tw-border-opacity: 1;
+  border-color: rgb(254 240 138 / var(--tw-border-opacity))
+}
+
+.border-yellow-800 {
+  --tw-border-opacity: 1;
+  border-color: rgb(133 77 14 / var(--tw-border-opacity))
+}
+
+.border-orange-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(249 115 22 / var(--tw-border-opacity))
+}
+
+.border-orange-400 {
+  --tw-border-opacity: 1;
+  border-color: rgb(251 146 60 / var(--tw-border-opacity))
 }
 
 .bg-white {
@@ -351,6 +436,26 @@
   background-color: rgb(244 244 245 / var(--tw-bg-opacity))
 }
 
+.bg-yellow-200 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 240 138 / var(--tw-bg-opacity))
+}
+
+.bg-yellow-100 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 249 195 / var(--tw-bg-opacity))
+}
+
+.bg-yellow-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(254 252 232 / var(--tw-bg-opacity))
+}
+
+.bg-orange-50 {
+  --tw-bg-opacity: 1;
+  background-color: rgb(255 247 237 / var(--tw-bg-opacity))
+}
+
 .p-4 {
   padding: 1rem
 }
@@ -365,6 +470,10 @@
 
 .p-1 {
   padding: 0.25rem
+}
+
+.p-0 {
+  padding: 0px
 }
 
 .px-2 {
@@ -402,6 +511,18 @@
 
 .pr-4 {
   padding-right: 1rem
+}
+
+.pl-10 {
+  padding-left: 2.5rem
+}
+
+.pr-2 {
+  padding-right: 0.5rem
+}
+
+.pl-2 {
+  padding-left: 0.5rem
 }
 
 .text-center {
