@@ -20,11 +20,12 @@ import {useUserStore} from "../store/zustand";
 import {updateProfile} from "../services/updateUserQuery";
 import Label from "../components/Common/Label";
 import Button from "../components/Common/Button";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 export default function Account({navigation}) {
     const tailwind = useTailwind();
     const [user, setUser] = useState({});
-    const [authToken, setAuthToken] = useState('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6ImU5Y2I2ODM3Nzc0NjgwOTZjODhlYWM1ODU2Mjk4NTQxYWFmMjYzZmRmMTU4ZWY3ODIwOWI5ZjI4Yzg2NWUxNjY1MTM0YjI2MzcyZmE0YzgxIn0.eyJhdWQiOiIxMDMyMyIsImp0aSI6ImU5Y2I2ODM3Nzc0NjgwOTZjODhlYWM1ODU2Mjk4NTQxYWFmMjYzZmRmMTU4ZWY3ODIwOWI5ZjI4Yzg2NWUxNjY1MTM0YjI2MzcyZmE0YzgxIiwiaWF0IjoxNjcwNzYxMTU5LCJuYmYiOjE2NzA3NjExNTksImV4cCI6MTcwMjI5NzE1OSwic3ViIjoiNjA5NjU4MCIsInNjb3BlcyI6W119.dfzkbkCT_MjkJndVTXFgwSrUSG_lEauQ4OZ_dB0EZD5VIlKoEv_69ZQsRW-hXYqoHTSTHJGjtm2TxZF7SCWZ75XiPpd0kW4IcY6e53J3BAcYBUnZ9wWwXDQfbMREwi4UYlMjk0TZyTDmJg10jpQLoh4DMMY3KKDytX4_jA68eGnaUzB0DXogzpLT7YHdGjilV6TNL8jJcTbkWpNKsRNwwoH9RxcrK9Gz9DYroc57iktaTRQ1gLCFRD4ni3TCL6-JAWYcBITJGNb5kUguG5dllLy_n1IdpiGwWM4EBufvYXp45Nj63Us2Nrd2XSmtpmjKEzgRdqHLndi2LOSMBVoReWvkoqzSkEzVUa_S2py8IRx60GFHosSn9dxCQIGH544-SUkNigMoaYsQziIZQlfoQ1BcqKakIEGGhqlpeMXtJkMi6BpEqSA0sl5jmT0kGptqa9HysElaWiZLzSv4pDkV7wdbghqAR0su9ZdnpbulCdM8hwE7Jd6xZ6PDDJV8RWWlT_sq2V0vUrHyBc6Bk18GKVNADakE9d9uXlJLGe42Da0IA0PT9hm80ZD_iljIzJYapnykRVkKAMStmDlMZv_peJ8c8pWhf3YyxOL1NXwOmqRWo-i_4hvlvSKYZjdKIM1fji5qu7ZMwkaaX1vR9r5dXJyciqETysiuXwnUcmLo-aU');
+    const [authToken, setAuthToken] = useState('eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiIsImp0aSI6IjU4YzRlOWNjNDNmNmYyZmMxNjhlM2Y2NTI0ZTdiMzJiZTQxZjUxM2RjZjUwYjc0YzUzN2FmYzdhM2Q2MzgwYzczOTk4Yzk2NDczYzQwZGY1In0.eyJhdWQiOiIxMDMyMyIsImp0aSI6IjU4YzRlOWNjNDNmNmYyZmMxNjhlM2Y2NTI0ZTdiMzJiZTQxZjUxM2RjZjUwYjc0YzUzN2FmYzdhM2Q2MzgwYzczOTk4Yzk2NDczYzQwZGY1IiwiaWF0IjoxNjcxMjU2NzQ4LCJuYmYiOjE2NzEyNTY3NDgsImV4cCI6MTcwMjc5Mjc0OCwic3ViIjoiNjA5NjU4MCIsInNjb3BlcyI6W119.Ji7X8UPLP2VLw4Ggzm32nvoXm1V37VSEklEN5iB4gmZyo5b_E4eQu9LnGDs3YjtoiBhXhKDABF2fUN7mER5vFtIha-S39wfDuWnfRnVP_WnlIF4pNA64Tqy0zYmcK8ct4bS3IzMgkm2dFGQWCIFXxZ6CRAbttGCofGIQX3I3vNcmvRtHWoJeSwHtyCL1WCZkV6l0xjRSEzBptwKPTM35DCDvbFHjq798ZxvVPzna7n-GuZEc9IeRU0r7TDAuBSa1h6gq4yqVzXitYgOW2-le8zdkelq5QHUDz1KZrz0qllol_MmbNpsm0j38JKg_I4Tv02RROZdlykz7NpiVrsMqPnkfWtemihcFcl-ioqzfavhivnT0xXJFBGj9zBNn9nv_GRfJJV0pH-sUiBeo_AJuxBdvAJqzqqskKA3n_8S9HNQZDXtYrQHG2hM0CLfWjI3aQjeVVU-kL0_evxFxlSrfdRA14F0FEqWpQ1LF6-l1hNFnzLQ7ipwRc9duFMiyjsFBlHnlsMWv7gIDJxPqnUjXjSy6AD1lEQLTc2LkxAONWkROcemN0x1HwjMzIKSzp2m9GPaP4XwnjzhIdiyp2v3T0e1_XAFGY2mu7xdmZxCoA_v4Ab2sVyuI2cVzvpIICNS-_S10_RqT8klktSUOSkKcgPHWue3QO9mZQjBlbutvnF8');
     const [about, setAbout] = useState('');
     const [loading, setLoading] = useState(false);
     const [editMode, setEditMode] = useState(false);
@@ -38,9 +39,6 @@ export default function Account({navigation}) {
         setEditMode(false);
         setLoading(true)
         let {data: {User}} = await retrieveData('dnstyx');
-
-        // let res = await retrieveViewer(userToken);
-        // console.log('res', res);
 
         setUser(User);
         setAbout(User.about);
@@ -59,8 +57,14 @@ export default function Account({navigation}) {
         setEditMode(false);
     }
 
-    const handleAuthenticate = () => {
+    const handleAuthenticate = async () => {
         setUserToken(authToken);
+
+        try {
+            await AsyncStorage.setItem('@access_token', authToken)
+        } catch (e) {
+            // saving error
+        }
     }
 
     return loading ? <LoadingScreen/> : (

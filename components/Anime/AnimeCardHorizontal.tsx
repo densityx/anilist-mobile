@@ -11,11 +11,11 @@ export default function AnimeCardHorizontal({anime}) {
 
     return (
         <TouchableOpacity
-            key={anime?.node?.id}
+            key={anime?.id}
             onPress={() => {
                 navigation.navigate('AnimeShow', {
-                    animeId: anime?.node?.id,
-                    animeName: anime?.node?.title?.userPreferred
+                    animeId: anime?.id,
+                    animeName: anime?.title?.userPreferred
                 });
             }}
         >
@@ -25,7 +25,7 @@ export default function AnimeCardHorizontal({anime}) {
                 >
                     <Image
                         source={{
-                            uri: anime.node.coverImage.large
+                            uri: anime?.coverImage?.large
                         }}
                         style={tailwind('h-[160px] w-full')}
                     />
@@ -38,54 +38,54 @@ export default function AnimeCardHorizontal({anime}) {
 
                 <View style={tailwind('w-3/4 bottom-0 left-0 pl-4')}>
                     <Text style={tailwind('text-lg text-zinc-800 dark:text-teal-500 font-medium')}>
-                        {anime?.node?.title?.userPreferred}
+                        {anime?.title?.userPreferred}
                     </Text>
 
                     <View
                         style={tailwind('flex flex-row flex-wrap w-full')}
                     >
-                        {anime?.node?.genres?.map((genre, index) => (
+                        {anime?.genres?.map((genre, index) => (
                             <Tag genre={genre} key={index} style={'mr-2 mt-2'}/>
                         ))}
                     </View>
 
                     <View style={tailwind('flex flex-row flex-wrap w-full')}>
-                        {!!anime?.node?.duration &&
+                        {!!anime?.duration &&
                             <View style={tailwind('mt-2 w-1/2')}>
                                 <Text
                                     style={tailwind('text-zinc-800 dark:text-zinc-400')}
                                 >
-                                    Duration: {anime?.node?.duration} mins
+                                    Duration: {anime?.duration} mins
                                 </Text>
                             </View>
                         }
 
-                        {!!anime?.node?.episodes &&
+                        {!!anime?.episodes &&
                             <View style={tailwind('mt-2 w-1/2')}>
                                 <Text
                                     style={tailwind('text-zinc-800 dark:text-zinc-400')}
                                 >
-                                    Ep: {anime?.node?.episodes} episodes
+                                    Ep: {anime?.episodes} episodes
                                 </Text>
                             </View>
                         }
 
-                        {!!anime?.node?.trending &&
+                        {!!anime?.trending &&
                             <View style={tailwind('mt-2 w-1/2')}>
                                 <Text
                                     style={tailwind('text-zinc-800 dark:text-zinc-400')}
                                 >
-                                    Trending: #{anime?.node?.trending}
+                                    Trending: #{anime?.trending}
                                 </Text>
                             </View>
                         }
 
-                        {!!anime?.node?.favourites &&
+                        {!!anime?.favourites &&
                             <View style={tailwind('mt-2 w-1/2')}>
                                 <Text
                                     style={tailwind('text-zinc-800 dark:text-zinc-400')}
                                 >
-                                    Fav: {anime?.node?.favourites}
+                                    Fav: {anime?.favourites}
                                 </Text>
                             </View>
                         }

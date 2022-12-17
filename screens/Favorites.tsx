@@ -3,7 +3,6 @@ import {RefreshControl, SafeAreaView, ScrollView, Text, View} from "react-native
 import {useTailwind} from "tailwind-rn";
 import Card from "../components/Common/Card";
 import {IconInfoCircle} from "tabler-icons-react-native";
-import {retrieveData} from '../services/userFavoriteSingleQuery';
 import LoadingScreen from "../components/Common/LoadingScreen";
 import AnimeCardHorizontal from "../components/Anime/AnimeCardHorizontal";
 import MangaCardHorizontal from "../components/Manga/MangaCardHorizontal";
@@ -14,6 +13,7 @@ import {useUserStore} from "../store/zustand";
 import Label from '../components/Common/Label';
 import Button from '../components/Common/Button';
 import {useNavigation} from "@react-navigation/native";
+import {fetchUserData} from "../services/fetcher";
 
 const FavoriteListScreen = () => {
     const tailwind = useTailwind();
@@ -26,10 +26,12 @@ const FavoriteListScreen = () => {
 
     const getFavorites = useCallback(async () => {
         setLoading(true)
-        let {data} = await retrieveData(userToken);
 
-        setFavoriteAnime(data.User.favourites.anime.edges)
-        setFavoriteManga(data.User.favourites.manga.edges)
+        const {data: {Viewer: {favourites: {anime, manga}}}} = await fetchUserData();
+
+        setFavoriteAnime(anime.nodes)
+        setFavoriteManga(manga.nodes)
+
         setLoading(false);
     }, [userToken]);
 

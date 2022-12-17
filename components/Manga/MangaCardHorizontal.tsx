@@ -1,6 +1,6 @@
+import React from "react";
 import {Image, Text, TouchableOpacity, View} from "react-native";
 import {LinearGradient} from "expo-linear-gradient";
-import React from "react";
 import {useNavigation} from "@react-navigation/native";
 import {useTailwind} from "tailwind-rn";
 import Tag from "../Common/Tag";
@@ -9,16 +9,14 @@ export default function MangaCardHorizontal({manga}) {
     const navigation = useNavigation();
     const tailwind = useTailwind();
 
-    console.log('manga data', manga.node.id);
-
     return (
         <TouchableOpacity
-            key={manga?.node?.id}
+            key={manga?.id}
             onPress={() => {
                 console.log('manga', manga.id);
                 navigation.navigate('MangaShow', {
-                    mangaId: manga?.node?.id,
-                    mangaName: manga?.node?.title?.userPreferred
+                    mangaId: manga?.id,
+                    mangaName: manga?.title?.userPreferred
                 });
             }}
         >
@@ -28,7 +26,7 @@ export default function MangaCardHorizontal({manga}) {
                 >
                     <Image
                         source={{
-                            uri: manga.node.coverImage.large
+                            uri: manga?.coverImage?.large
                         }}
                         style={tailwind('h-[160px] w-full')}
                     />
@@ -41,54 +39,34 @@ export default function MangaCardHorizontal({manga}) {
 
                 <View style={tailwind('w-3/4 bottom-0 left-0 pl-4')}>
                     <Text style={tailwind('text-lg text-zinc-800 dark:text-teal-500 font-medium')}>
-                        {manga?.node?.title?.userPreferred}
+                        {manga?.title?.userPreferred}
                     </Text>
 
                     <View
                         style={tailwind('flex flex-row flex-wrap w-full')}
                     >
-                        {manga?.node?.genres?.map((genre, index) => (
+                        {manga?.genres?.map((genre, index) => (
                             <Tag genre={genre} key={index} style={'mr-2 mt-2'}/>
                         ))}
                     </View>
 
                     <View style={tailwind('flex flex-row flex-wrap w-full')}>
-                        {!!manga?.node?.duration &&
+                        {!!manga?.duration &&
                             <View style={tailwind('mt-2 w-1/2')}>
                                 <Text
                                     style={tailwind('text-zinc-800 dark:text-zinc-400')}
                                 >
-                                    Duration: {manga?.node?.duration} mins
+                                    Duration: {manga?.duration} mins
                                 </Text>
                             </View>
                         }
 
-                        {!!manga?.node?.episodes &&
+                        {!!manga?.trending &&
                             <View style={tailwind('mt-2 w-1/2')}>
                                 <Text
                                     style={tailwind('text-zinc-800 dark:text-zinc-400')}
                                 >
-                                    Ep: {manga?.node?.episodes} episodes
-                                </Text>
-                            </View>
-                        }
-
-                        {!!manga?.node?.trending &&
-                            <View style={tailwind('mt-2 w-1/2')}>
-                                <Text
-                                    style={tailwind('text-zinc-800 dark:text-zinc-400')}
-                                >
-                                    Trending: #{manga?.node?.trending}
-                                </Text>
-                            </View>
-                        }
-
-                        {!!manga?.node?.favourites &&
-                            <View style={tailwind('mt-2 w-1/2')}>
-                                <Text
-                                    style={tailwind('text-zinc-800 dark:text-zinc-400')}
-                                >
-                                    Fav: {manga?.node?.favourites}
+                                    Trending: #{manga?.trending}
                                 </Text>
                             </View>
                         }
