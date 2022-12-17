@@ -15,7 +15,7 @@ import {retrieveUserQuery} from "../services/retrieveUserQuery";
 import {IconHeart, IconStar} from "tabler-icons-react-native";
 import DataDescription from "../components/Common/DataDescription";
 
-export default function AnimeShow({route}) {
+export default function AnimeShow({route}): React.ReactElement {
     const tailwind = useTailwind();
     const {animeId} = route.params;
     const [anime, setAnime] = useState({});

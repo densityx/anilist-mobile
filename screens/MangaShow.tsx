@@ -23,7 +23,7 @@ import {retrieveUserQuery} from "../services/retrieveUserQuery";
 import {useUserStore} from "../store/zustand";
 import DataDescription from "../components/Common/DataDescription";
 
-export default function MangaShow({route}) {
+export default function MangaShow({route}): React.ReactElement {
     const tailwind = useTailwind();
     const {mangaId} = route.params;
     const [manga, setManga] = useState({});

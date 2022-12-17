@@ -10,7 +10,7 @@ import LoadingScreen from "../components/Common/LoadingScreen";
 import Card from "../components/Common/Card";
 import InputSearch from "../components/Common/InputSearch";
 
-const MangaListScreen = () => {
+const MangaListScreen = (): React.ReactElement => {
     const tailwind = useTailwind();
     const [term, setTerm] = useState('')
     const [debounced] = useDebouncedValue(term, 500);

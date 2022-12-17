@@ -15,7 +15,7 @@ import Button from '../components/Common/Button';
 import {useNavigation} from "@react-navigation/native";
 import {fetchUserData} from "../services/fetcher";
 
-const FavoriteListScreen = () => {
+const FavoriteListScreen = (): React.ReactElement => {
     const tailwind = useTailwind();
     const [loading, setLoading] = useState(false);
     const [favoriteAnime, setFavoriteAnime] = useState([]);

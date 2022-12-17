@@ -5,11 +5,7 @@ import {useTailwind} from "tailwind-rn";
 import Button from '../components/Common/Button';
 import InputSearch from "../components/Common/InputSearch";
 import Card from "../components/Common/Card";
-
-interface EventTodo {
-    name: string;
-    id: string;
-}
+import {useTodoStore} from "../store/zustand";
 
 function TodoItem({name, onRemove,}: { name: string; onRemove: () => void; }): React.ReactElement {
     const tailwind = useTailwind();
@@ -35,31 +31,18 @@ function TodoItem({name, onRemove,}: { name: string; onRemove: () => void; }): R
 }
 
 export default function TodoScreen(): React.ReactElement {
-    const [inputValue, setInputValue] = useState('');
-    const [participantList, setTodoList] = useState<EventTodo[]>(
-        []
-    );
-
-    const addTodo = () => {
-        setTodoList(
-            [{name: inputValue, id: Date.now().toString()}].concat(participantList)
-        );
-        setInputValue('');
-    };
-
-    const removeTodo = (id: string) => {
-        setTodoList(
-            participantList.filter((participant) => participant.id !== id)
-        );
-    };
+    const [newTodo, setNewTodo] = useState('');
+    const todos = useTodoStore(state => state.todos)
+    const addTodo = useTodoStore(state => state.addTodo);
+    const removeTodo = useTodoStore(state => state.removeTodo);
 
     const tailwind = useTailwind();
 
     return (
         <SafeAreaView style={tailwind('h-full m-4')}>
             <ScrollView style={[{width: '100%'}]}>
-                {participantList.length ? (
-                    participantList.map((participant) => (
+                {todos.length ? (
+                    todos.map((participant) => (
                         <TodoItem
                             key={participant.id}
                             name={participant.name}
@@ -78,8 +61,8 @@ export default function TodoScreen(): React.ReactElement {
             <View style={tailwind('w-full flex flex-row items-center mb-8')}>
                 <View style={tailwind('w-9/12 pr-2')}>
                     <InputSearch
-                        term={inputValue}
-                        onChangeText={setInputValue}
+                        term={newTodo}
+                        onChangeText={setNewTodo}
                         placeholder={'Add anime to watch'}
                     />
                 </View>
@@ -88,8 +71,15 @@ export default function TodoScreen(): React.ReactElement {
                     <Button
                         text="Add"
                         style={'py-2'}
-                        disabled={inputValue === ''}
-                        onPress={addTodo}
+                        disabled={newTodo === ''}
+                        onPress={() => {
+                            addTodo({
+                                name: newTodo,
+                                id: Date.now().toString()
+                            });
+
+                            setNewTodo('');
+                        }}
                     />
                 </View>
             </View>

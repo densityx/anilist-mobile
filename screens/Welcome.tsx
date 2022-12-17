@@ -3,27 +3,12 @@ import {SafeAreaView, Text, View} from "react-native";
 import {useTailwind} from "tailwind-rn";
 import Card from "../components/Common/Card";
 import Label from "../components/Common/Label";
+import {useInfoStore} from "../store/zustand";
 
-const DEPENDENCIES: string[] = [
-    'React Native Expo',
-    'React Navigation',
-    'Zustand',
-    'TypeScript',
-    'Tailwind CSS',
-    'AsyncStorage',
-    'WebView / YouTube',
-    'Reanimated'
-];
-
-const TOOLS: string[] = [
-    'WebStorm',
-    'Expo Go on Android',
-    'Chrome',
-    'IOS Simulator'
-];
-
-export default function Welcome() {
+export default function Welcome(): React.ReactElement {
     const tailwind = useTailwind();
+    const dependencies = useInfoStore(state => state.dependencies);
+    const tools = useInfoStore(state => state.tools);
 
     return (
         <SafeAreaView style={tailwind('m-4')}>
@@ -47,7 +32,7 @@ export default function Welcome() {
                 </Label>
 
                 <View style={tailwind('flex flex-row flex-wrap mt-3')}>
-                    {DEPENDENCIES.map((dependency, index) => (
+                    {dependencies.map((dependency, index) => (
                         <Card key={index} styles={'mr-1 mb-1'}>
                             <Text style={tailwind('dark:text-zinc-400')}>
                                 {dependency}
@@ -63,7 +48,7 @@ export default function Welcome() {
                 </Label>
 
                 <View style={tailwind('flex flex-row flex-wrap mt-3')}>
-                    {TOOLS.map((tool, index) => (
+                    {tools.map((tool, index) => (
                         <Card key={index} styles={'mr-1 mb-1'}>
                             <Text style={tailwind('dark:text-zinc-400')}>
                                 {tool}
