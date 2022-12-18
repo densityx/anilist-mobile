@@ -93,7 +93,8 @@ const AnimeListComponent = (): React.ReactElement => {
                         ListEmptyComponent={() => (
                             <View style={tailwind('p-4')}>
                                 <Card styles={'px-4'}>
-                                    <Text style={tailwind('font-bold text-center text-lg dark:text-teal-500')}>
+                                    <Text
+                                        style={tailwind('font-bold text-center text-lg text-zinc-800 dark:text-teal-500')}>
                                         Search anime and get the result here...
                                     </Text>
                                 </Card>
